@@ -17,5 +17,19 @@
   --color-base-100: #F7F7F7;    /* Light gray background */
   --color-base-300: #E7E6E6;    /* Section background */
   --color-base-content: #333333; /* Body text color */
-
 }
+
+
+.active {
+  color: #006939;
+  border-bottom: 3px solid #006939;
+  /* padding-bottom: 2px; */
+  /* transition: color 0.3s ease, border-bottom 0.2s ease, padding-bottom 0.3s ease; */
+}
+
+/* Optional: Slightly thinner border for large screens */
+/* @media (min-width: 1024px) {
+  .active {
+    border-bottom: 3px solid #006939;
+  }
+} */
