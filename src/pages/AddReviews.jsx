@@ -9,7 +9,7 @@ const AddReviews = () => {
   const [cities, setCities] = useState([]);
   const [city, setCity] = useState("");
 
-  // Fetch all countries from REST Countries
+  // Fetched all countries from REST Countries
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
       .then((res) => res.json())
@@ -17,22 +17,26 @@ const AddReviews = () => {
         const sorted = data.sort((a, b) =>
           a.name.common.localeCompare(b.name.common)
         );
-        setCountriesData(sorted);
-        const uniqueRegions = [...new Set(sorted.map((c) => c.region).filter(Boolean))];
+        setCountriesData(sorted);//setting all countries data
+
+        const uniqueRegions = [...new Set(sorted.map(c => c.region).filter(Boolean))];//extracting regions from countries
+        //new Set(...) → Removes duplicates because Set only keeps unique values.
+        //[...new Set(...)] → Converts the Set back into an array using the spread operator (...).
+
         setRegions(uniqueRegions);
       });
   }, []);
 
-  // Filter countries by selected region
+  // Filtered countries by selected region
   useEffect(() => {
-    const filtered = countriesData.filter((c) => c.region === region);
-    setFilteredCountries(filtered);
+    const filtered = countriesData.filter(c => c.region === region);
+    setFilteredCountries(filtered);//setting countries by region
     setCountry("");
     setCities([]);
     setCity("");
   }, [region, countriesData]);
 
-  // Fetch cities from CountriesNow when a country is selected
+  // Fetched cities from CountriesNow when a country is selected
   useEffect(() => {
     if (!country) return;
 
@@ -55,7 +59,7 @@ const AddReviews = () => {
       .catch(() => setCities([]));
   }, [country]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     console.log({ region, country, city });
   };
