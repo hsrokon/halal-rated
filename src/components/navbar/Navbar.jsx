@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-gray-200">
+    <nav className="bg-white border-gray-200 font-poppins">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={'https://i.ibb.co/tp2thjR1/tr-ffl.png'} className="h-8" alt="Logo" />
@@ -63,23 +63,27 @@ const Navbar = () => {
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-3 text-sm lg:text-base lg:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
             
             <NavLink to="/"
-              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-1 transition-all duration-150 ease-in-out">
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-0.5 transition-all duration-150 ease-in-out">
               Home
             </NavLink>
             <NavLink to="/shops"
-              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5  md:px-1 transition-all duration-150 ease-in-out">
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-0.5 transition-all duration-150 ease-in-out">
               Shops
             </NavLink>
             <NavLink to="/reviews"
-              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5  md:px-1 transition-all duration-150 ease-in-out">
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-0.5 transition-all duration-150 ease-in-out">
               Reviews
+            </NavLink>
+            <NavLink to="/addReviews"
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-0.5 transition-all duration-150 ease-in-out">
+              Add Review
             </NavLink>
             <NavLink to="/shopWishlist"
               className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-1 transition-all duration-150 ease-in-out">
               Shop Wishlist
             </NavLink>
             <NavLink to="/contact"
-              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5  md:px-1 transition-all duration-150 ease-in-out">
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-0.5 transition-all duration-150 ease-in-out">
               Contact
             </NavLink>
 

@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Banner from "../components/banner/Banner";
 import Shops from "../pages/Shops";
 import Home from "../pages/Home";
+import AddReviews from "../pages/AddReviews";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
             {
                 path: '/shops',
                 element: <Shops></Shops>
+            },
+            {
+                path: '/addReviews',
+                element: <AddReviews></AddReviews>
             }
         ]
     },
