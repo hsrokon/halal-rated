@@ -14,14 +14,18 @@ const Navbar = () => {
         </a>
 
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
+          <div className='space-x-2'>
+            <button className='btn border-0 bg-primary text-white rounded-lg'>Login</button>
+            <button className='btn border-2 border-primary text-primary rounded-lg'>Sign Up</button>
+          </div>
+          {/* <button
             type="button"
             className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
             onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
           >
             <span className="sr-only">Open user menu</span>
             <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user" />
-          </button>
+          </button> */}
 
           {isUserDropdownOpen && (
             <div className="absolute top-14 right-4 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm">
@@ -75,7 +79,7 @@ const Navbar = () => {
               Shop Wishlist
             </NavLink>
             <NavLink to="/contact"
-              className="block py-2 px-3 rounded md:border-b-2 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5  md:px-1 transition-all duration-150 ease-in-out">
+              className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5  md:px-1 transition-all duration-150 ease-in-out">
               Contact
             </NavLink>
 
