@@ -14,9 +14,9 @@ const Navbar = () => {
         </a>
 
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <div className='space-x-2'>
-            <button className='btn border-0 bg-primary text-white rounded-lg'>Login</button>
-            <button className='btn border-2 border-primary text-primary rounded-lg'>Sign Up</button>
+          <div className='md:space-x-2'>
+            <button className='btn btn-sm lg:btn-md border-0 bg-primary text-white rounded-lg'>Login</button>
+            <button className='hidden md:inline-block btn lg:btn-md btn-sm border-2 border-primary text-primary rounded-lg'>Sign Up</button>
           </div>
           {/* <button
             type="button"
@@ -60,7 +60,7 @@ const Navbar = () => {
           className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? '' : 'hidden'}`}
           id="navbar-user"
         >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-3 text-sm lg:text-base lg:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
             
             <NavLink to="/"
               className="block py-2 px-3 rounded md:border-b-3 md:border-b-transparent md:hover:text-primary md:hover:border-b-primary md:py-0.5 md:px-1 transition-all duration-150 ease-in-out">
