@@ -76,7 +76,7 @@ const AddReviews = () => {
           {/* Region */}
           <div className="w-full md:w-2/4 md:mx-auto lg:mx-0 lg:w-1/3">
             <label className="label">
-              <span className="label-text">&#10095; Select Region</span>
+              <span className="label-text text-primary">&#10095; Select Region</span>
             </label>
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
@@ -97,7 +97,7 @@ const AddReviews = () => {
           {/* Country */}
           <div className="w-full md:w-2/4 md:mx-auto lg:mx-0 lg:w-1/3">
             <label className="label">
-              <span className="label-text">&#10095; Select Country</span>
+              <span className="label-text text-primary">&#10095; Select Country</span>
             </label>
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
@@ -119,7 +119,7 @@ const AddReviews = () => {
           {/* City */}
           <div className="w-full md:w-2/4 md:mx-auto lg:mx-0 lg:w-1/3">
             <label className="label">
-              <span className="label-text">&#10095; Select City</span>
+              <span className="label-text text-primary">&#10095; Select City</span>
             </label>
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
@@ -138,6 +138,66 @@ const AddReviews = () => {
             </select>
           </div>
         </div>
+
+        <div className="flex flex-col lg:flex-row justify-between">
+          <label className="label flex-col items-start w-full
+          md:w-2/4 lg:w-full mx-auto">
+            <span className="label-text text-primary">
+            &#10095;  Shop Name
+            </span>
+            
+            <input type="text" 
+            name="shop-name" 
+            placeholder="E.g. Al-Noor Halal Store" 
+            className="input input-bordered border-2 border-primary rounded lg:w-xs 
+            placeholder:text-gray-500"/>
+          </label>
+
+          <label className="label flex-col items-start w-full
+          md:w-2/4 lg:w-full mx-auto">
+            <span className="label-text text-primary">
+            &#10095;  Shop Specific Location
+            </span>
+            
+            <input type="text" 
+            name="shop-name" 
+            placeholder="E.g. 103 Prince Street, New York, NY 10012" 
+            className="input input-bordered border-2 border-primary rounded lg:w-xs
+            placeholder:text-gray-500"/>
+          </label>
+          
+          <label className="label flex-col items-start w-full
+          md:w-2/4 md:mx-auto lg:mx-0 lg:w-auto ">
+            <span className="label-text text-primary">
+            &#10095;  Rating
+            </span>
+            
+            <div className="rating">
+              <input 
+              type="radio" 
+              name="rating"
+              className="mask mask-star-2 bg-green-700"  />
+              <input 
+              type="radio" 
+              name="rating"
+              className="mask mask-star-2 bg-green-700"  />
+              <input 
+              type="radio" 
+              name="rating"
+              className="mask mask-star-2 bg-green-700"  />
+              <input 
+              type="radio" 
+              name="rating"
+              className="mask mask-star-2 bg-green-700"  />
+              <input 
+              type="radio" 
+              name="rating"
+              className="mask mask-star-2 bg-green-700"  /> 
+            </div>
+          </label>
+
+        </div>
+        
       </form>
     </div>
   );
