@@ -72,6 +72,8 @@ const AddReviews = () => {
       </h2>
 
       <form onSubmit={handleSubmit} className="my-10 space-y-6 px-4">
+
+        {/*---------- shop region and location */}
         <div className="flex flex-col gap-2 lg:gap-6 lg:flex-row lg:justify-around lg:items-end">
           {/* Region */}
           <div className="w-full md:w-2/4 md:mx-auto lg:mx-0 lg:w-1/3">
@@ -81,6 +83,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={region}
+              required
               onChange={(e) => setRegion(e.target.value)}
             >
               <option value="" disabled>
@@ -102,6 +105,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={country}
+              required
               onChange={(e) => setCountry(e.target.value)}
               disabled={!region}
             >
@@ -124,6 +128,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={city}
+              required
               onChange={(e) => setCity(e.target.value)}
               disabled={!cities.length}
             >
@@ -139,6 +144,7 @@ const AddReviews = () => {
           </div>
         </div>
 
+        {/*--------shop Name location and rating */}
         <div className="flex flex-col lg:flex-row justify-between">
           <label className="label flex-col items-start w-full
           md:w-2/4 lg:w-full mx-auto">
@@ -148,6 +154,7 @@ const AddReviews = () => {
             
             <input type="text" 
             name="shop-name" 
+            required
             placeholder="E.g. Al-Noor Halal Store" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs 
             placeholder:text-gray-500"/>
@@ -160,7 +167,8 @@ const AddReviews = () => {
             </span>
             
             <input type="text" 
-            name="shop-name" 
+            name="shop-specific-location" 
+            required
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs
             placeholder:text-gray-500"/>
@@ -176,6 +184,7 @@ const AddReviews = () => {
               <input 
               type="radio" 
               name="rating"
+              required
               className="mask mask-star-2 bg-green-700"  />
               <input 
               type="radio" 
@@ -195,7 +204,20 @@ const AddReviews = () => {
               className="mask mask-star-2 bg-green-700"  /> 
             </div>
           </label>
+        </div>
 
+        {/*----- shop review  */}
+        <div>
+          <label className="label flex flex-col">
+            <span className="label-text text-primary">&#10095; Your Review</span>
+            
+            <textarea 
+            name="review-area"
+            required
+            className="text-area w-full md:w-1/2 md:h-40 h-32 text-sm lg:text-base lg:w-96 lg:h-52 rounded border-2 border-primary p-2 placeholder:text-gray-600 text-base-content"
+            placeholder="Write your review. We trust you..."
+            ></textarea>
+          </label>
         </div>
         
       </form>
