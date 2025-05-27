@@ -65,6 +65,14 @@ const AddReviews = () => {
     console.log({ region, country, city });
   };
 
+
+  const [ consent, setConsent ] = useState(false)
+  const handleHonestConcent = e => {
+    setConsent(e.target.checked)
+  }
+
+
+
   return (
     <div className="font-poppins mt-4 w-11/12 max-w-4xl mx-auto min-h-screen">
       <h1 className="text-3xl font-semibold text-center">Add Trusted Halal Spots</h1>
@@ -312,6 +320,7 @@ const AddReviews = () => {
           <label className="label cursor-pointer ml-8">
                 <input 
                 type="checkbox"
+                onChange={handleHonestConcent}
                 required
                 value="Yes" 
                 className="checkbox checkbox-success mr-2 border-2" />
@@ -329,7 +338,10 @@ const AddReviews = () => {
 
         {/* ----submit  */}
         <div className="flex justify-center my-10">
-          <button className="btn bg-secondary text-white hover:bg-primary rounded px-10 py-6 text-base">Submit Review</button>
+          <button 
+          type="submit" 
+          disabled={!consent}
+          className={`btn ${!consent ? 'border-2 border-primary' : 'text-white bg-primary'}  rounded px-10 py-6 text-base`}>Submit Review</button>
         </div>
       </form>
     </div>
