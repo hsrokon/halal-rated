@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 const AddReviews = () => {
   const [countriesData, setCountriesData] = useState([]);
@@ -61,15 +64,70 @@ const AddReviews = () => {
       .catch(() => setCities([]));
   }, [country]);
 
-  const [ rating, setRating ] = useState(1);
+  const [ draftData, setDraftData ] = useState(null);
+  //session storage for draft data
+  useEffect(()=>{
+    const draft = sessionStorage.getItem('pendingReview');
+    if (draft) {
+      const data = JSON.parse(draft);
+
+      //controlled input set
+      setRegion(data.region || '');
+      setCountry(data.country || '');
+      setCity(data.city || '');
+      setRating(data.rating || null);
+      setHalalCertified(data.halalCertified || false);
+      setHonestyConsent(data.honestyConsent || false);
+      setUserDisplay(data.userDisplay || false);
+      setSelectedTags(data.selectedTags || []);
+
+      setDraftData(data);
+    }
+  },[])
+
+
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [ rating, setRating ] = useState(0);
   const [ halalCertified, setHalalCertified ] = useState(false);
   const [ honestyConsent, setHonestyConsent ] = useState(false);
   const [ userDisplay, setUserDisplay ] = useState(false);
+  const [ selectedTags, setSelectedTags ] = useState([]);
 
   // Form Submit
   const handleSubmit = e => {
     e.preventDefault();
     
+    //!user redirect to login and save draft form data
+    if (!user) {
+      const form = e.target;
+      const saveReviewDraft = {
+        shopName : form.shopName.value,
+        shopSpecificLocation : form.shopSpecificLocation.value,
+        reviewArea : form.reviewArea.value,
+        selectedTags : Array.from(form.tags)
+              .filter(input => input.checked)
+              .map(input => input.value),
+        photoURL : form.photoURL.value,
+        region,
+        country,
+        city,
+        rating,
+        halalCertified,
+        honestyConsent,
+        userDisplay,
+      }
+
+      sessionStorage.setItem('pendingReview', JSON.stringify(saveReviewDraft));
+
+      //login redirect
+      navigate('/auth/login', {
+        state: location.pathname,
+      })
+      return;
+    }
+
     const form = e.target;
     const shopName = form.shopName.value;
     const shopSpecificLocation = form.shopSpecificLocation.value;
@@ -139,6 +197,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={region}
+              // defaultValue={region}
               required
               onChange={e => setRegion(e.target.value)}
             >
@@ -210,6 +269,7 @@ const AddReviews = () => {
             
             <input type="text" 
             name="shopName" 
+            defaultValue={draftData?.shopName}
             required
             placeholder="E.g. Al-Noor Halal Store" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
@@ -224,6 +284,7 @@ const AddReviews = () => {
             
             <input type="text" 
             name="shopSpecificLocation" 
+            defaultValue={draftData?.shopSpecificLocation}
             required
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
@@ -237,37 +298,17 @@ const AddReviews = () => {
             </span>
             
             <div className="rating">
-              <input 
-              type="radio" 
-              name="rating"
-              required
-              value="1"
-              onChange={e =>setRating(Number(e.target.value))}
-              className="mask mask-star-2 bg-green-700"  />
-              <input 
-              type="radio" 
-              name="rating"
-              value="2"
-              onChange={e=>setRating(Number(e.target.value))}
-              className="mask mask-star-2 bg-green-700"  />
-              <input 
-              type="radio" 
-              name="rating"
-              value="3"
-              onChange={e=>setRating(Number(e.target.value))}
-              className="mask mask-star-2 bg-green-700"  />
-              <input 
-              type="radio" 
-              name="rating"
-              value="4"
-              onChange={e=>setRating(Number(e.target.value))}
-              className="mask mask-star-2 bg-green-700"  />
-              <input 
-              type="radio" 
-              name="rating"
-              value="5"
-              onChange={e=>setRating(Number(e.target.value))}
-              className="mask mask-star-2 bg-green-700"  /> 
+              {[1, 2, 3, 4, 5].map(num => (
+                <input 
+                key={num}
+                type="radio"
+                name="rating"
+                value={num}
+                checked={rating===num}
+                onChange={e => setRating(Number(e.target.value))}
+                className="mask mask-star-2 bg-green-700"
+                />
+              ))}
             </div>
           </label>
         </div>
@@ -279,6 +320,7 @@ const AddReviews = () => {
             
             <textarea 
             name="reviewArea"
+            defaultValue={draftData?.reviewArea}
             required
             className="text-area w-full md:w-1/2 md:h-40 h-32 text-sm lg:text-base lg:w-96 lg:h-52 rounded border-2 border-primary p-2 placeholder:text-gray-600 text-base-content"
             placeholder="Write your review. We trust you..."
@@ -298,6 +340,7 @@ const AddReviews = () => {
                   <input 
                   type="radio" name="halalCertified"
                   value="Yes" 
+                  checked={halalCertified===true}
                   onChange={()=> setHalalCertified(true)}
                   className="radio checked:bg-green-600 ml-2 border-2" />
                 </label>
@@ -306,6 +349,7 @@ const AddReviews = () => {
                   <input 
                   type="radio" name="halalCertified"
                   value="No" 
+                  checked={halalCertified===false}
                   onChange={()=> setHalalCertified(false)}
                   className="radio checked:bg-gray-500 ml-3 border-2" />
                 </label>
@@ -364,6 +408,7 @@ const AddReviews = () => {
               type="url"
               required
               name="photoURL"
+              defaultValue={draftData?.photoURL}
               placeholder="https://"
               pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
               title="Must be valid URL"
@@ -381,6 +426,7 @@ const AddReviews = () => {
                 type="checkbox"
                 id="userDisplay"
                 onChange={e => setHonestyConsent(e.target.checked)}
+                checked={honestyConsent}
                 required
                 value="Yes" 
                 className="checkbox checkbox-success mr-2 border-2" />
@@ -393,6 +439,7 @@ const AddReviews = () => {
                 required
                 value="Yes" 
                 onChange={e => setUserDisplay(e.target.checked)}
+                checked={userDisplay}
                 className="checkbox checkbox-success mr-2 border-2" />
                 <span className="label-text text-primary font-semibold text-wrap text-sm md:text-base">I allow my name or profile or both info to be shown with this review.</span>
           </div>
