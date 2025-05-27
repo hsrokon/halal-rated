@@ -93,9 +93,7 @@ const AddReviews = () => {
       userDisplay,
     }
     console.log(userReviewData);
-    
   };
-
 
 
   return (
@@ -192,7 +190,7 @@ const AddReviews = () => {
             name="shopName" 
             required
             placeholder="E.g. Al-Noor Halal Store" 
-            className="input input-bordered border-2 border-primary rounded lg:w-xs 
+            className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
             placeholder:text-gray-500"/>
           </label>
 
@@ -206,7 +204,7 @@ const AddReviews = () => {
             name="shopSpecificLocation" 
             required
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
-            className="input input-bordered border-2 border-primary rounded lg:w-xs
+            className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
             placeholder:text-gray-500"/>
           </label>
           
