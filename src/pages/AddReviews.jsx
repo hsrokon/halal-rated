@@ -287,10 +287,10 @@ const AddReviews = () => {
           </div>
         </div>
 
-        {/* photo upload */}
-        <div className="flex flex-col">
+        {/* ------photo upload */}
+        <div className="flex flex-col md:w-1/2 md:mx-auto">
           <label className="label">
-                  <span className="label-text text-primary">&#10095; Upload Photo Link <span className="font-semibold italic">(Highly recommended)</span></span>
+                  <span className="label-text text-primary">&#10095; Upload Photo Link <span className="font-semibold italic text-xs lg:text-sm">(Highly recommended)</span></span>
           </label>
           <label className="input validator border-2 border-primary rounded">
             <IoIosLink className="text-xl" />
@@ -300,12 +300,37 @@ const AddReviews = () => {
               placeholder="https://"
               pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
               title="Must be valid URL"
+              className="w-full"
             />
           </label>
           <p className="validator-hint">Must be valid URL</p>
         </div>
         
-        
+        {/* ------consent */}
+        <div className="flex flex-col gap-4">
+          <h3 className="text-primary">&#10095; Final Consent</h3>
+          <label className="label cursor-pointer ml-8">
+                <input 
+                type="checkbox"
+                required
+                value="Yes" 
+                className="checkbox checkbox-success mr-2 border-2" />
+                <span className="label-text text-primary font-semibold text-wrap text-sm md:text-base">I confirm that my review is honest and based on my actual experience.</span>
+            </label>
+          <label className="label cursor-pointer ml-8">
+                <input 
+                type="checkbox"
+                required
+                value="Yes" 
+                className="checkbox checkbox-success mr-2 border-2" />
+                <span className="label-text text-primary font-semibold text-wrap text-sm md:text-base">I allow my name or profile or both info to be shown with this review.</span>
+            </label>
+        </div>
+
+        {/* ----submit  */}
+        <div className="flex justify-center my-10">
+          <button className="btn bg-secondary text-white hover:bg-primary rounded px-10 py-6 text-base">Submit Review</button>
+        </div>
       </form>
     </div>
   );
