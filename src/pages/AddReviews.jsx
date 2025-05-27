@@ -65,16 +65,20 @@ const AddReviews = () => {
   }, [country]);
 
   const [ draftData, setDraftData ] = useState(null);
+  const [pendingCountry, setPendingCountry] = useState('');
+  const [pendingCity, setPendingCity] = useState('');
+
   //session storage for draft data
   useEffect(()=>{
     const draft = sessionStorage.getItem('pendingReview');
     if (draft) {
       const data = JSON.parse(draft);
 
-      //controlled input set
+      //step by step region country set
       setRegion(data.region || '');
-      setCountry(data.country || '');
-      setCity(data.city || '');
+      setPendingCountry(data.country || '');
+      setPendingCity(data.city || '');
+      //other fields
       setRating(data.rating || null);
       setHalalCertified(data.halalCertified || false);
       setHonestyConsent(data.honestyConsent || false);
@@ -84,6 +88,38 @@ const AddReviews = () => {
       setDraftData(data);
     }
   },[])
+
+  useEffect(()=> {
+    if (pendingCountry && filteredCountries.length > 0) {
+      const found = filteredCountries.find(c=> c.name.common === pendingCountry);
+      if (found) {
+        setCountry(pendingCountry);
+        setPendingCountry('');
+      }
+    }
+  },[filteredCountries, pendingCountry]);
+
+  useEffect(()=> {
+    if (pendingCity && cities.length > 0) {
+      if (cities.includes(pendingCity)) {
+        setCity(pendingCity);
+        setPendingCity('');
+      }
+    }
+  },[cities, pendingCity]);
+
+
+  //for form clearing
+  const resetFormState = () => {
+  setRegion('');
+  setCountry('');
+  setCity('');
+  setRating(0);
+  setHalalCertified(false);
+  setHonestyConsent(false);
+  setUserDisplay(false);
+  setSelectedTags([]);
+  };
 
 
   const { user } = useContext(AuthContext);
@@ -164,13 +200,23 @@ const AddReviews = () => {
       if (result.isConfirmed) {
         console.log(userReviewData);
 
-        fetch()
+        fetch()//for server fetch
         
         Swal.fire({
           title: "Posted!",
           text: "Your file has been posted.",
           icon: "success"
         });
+
+        //resetting
+        sessionStorage.removeItem('pendingReview');
+        form.reset();
+        resetFormState();
+        form.shopName.value = '';
+        form.shopSpecificLocation.value = '';
+        form.reviewArea.value = '';
+        form.photoURL.value = '';
+        navigate('/');
       }
     });
   };
@@ -197,7 +243,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={region}
-              // defaultValue={region}
+              defaultValue={draftData?.region}
               required
               onChange={e => setRegion(e.target.value)}
             >
@@ -220,6 +266,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={country}
+              defaultValue={draftData?.country}
               required
               onChange={(e) => setCountry(e.target.value)}
               disabled={!region}
@@ -243,6 +290,7 @@ const AddReviews = () => {
             <select
               className="select select-bordered w-full border-2 border-primary rounded"
               value={city}
+              defaultValue={draftData?.city}
               required
               onChange={(e) => setCity(e.target.value)}
               disabled={!cities.length}
@@ -361,38 +409,26 @@ const AddReviews = () => {
                   <span className="label-text text-primary">&#10095; What stood out to you?</span>
             </label>
             <div className="flex flex-col gap-2 text-sm md:text-base">
-              <label className="label cursor-pointer ml-8">
-                    <input 
-                    type="checkbox"
-                    name="tags"
-                    value="Clean Environment" 
-                    className="checkbox checkbox-success mr-2 border-2" />
-                    <span className="label-text text-primary">Clean Environment</span>
-              </label>
-              <label className="label cursor-pointer ml-8">
-                    <input 
-                    type="checkbox"
-                    name="tags"
-                    value="Zabiha Verified" 
-                    className="checkbox checkbox-success mr-2 border-2" />
-                    <span className="label-text text-primary">Zabiha/Halal Verified</span>
-              </label>
-              <label className="label cursor-pointer ml-8">
-                    <input 
-                    type="checkbox"
-                    name="tags"
-                    value="Affordable Prices"  
-                    className="checkbox checkbox-success mr-2 border-2" />
-                    <span className="label-text text-primary">Affordable Prices</span>
-              </label>
-              <label className="label cursor-pointer ml-8">
-                    <input 
-                    type="checkbox"
-                    name="tags"
-                    value="Friendly Staff" 
-                    className="checkbox checkbox-success mr-2 border-2" />
-                    <span className="label-text text-primary">Friendly Staff</span>
-              </label>
+              {['Clean Environment', 'Zabiha Verified', 'Affordable Prices', 'Friendly Staff'].map((tag, idx)=> (
+                <label 
+                key={idx} 
+                className="label cursor-pointer ml-8">
+                  <input 
+                  type="checkbox" 
+                  name="tags"
+                  value={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={e => {
+                    const isChecked = e.target.checked;
+                    setSelectedTags(prev => 
+                      isChecked? [...prev, tag] : prev.filter(t => t!== tag)
+                    );
+                  }}
+                  className="checkbox checkbox-success mr-2 border-2"
+                  />
+                  <span className="label-text text-primary">{tag}</span>
+                </label>
+              ))}
             </div>
           </div>
         </div>
