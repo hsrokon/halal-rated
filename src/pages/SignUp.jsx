@@ -55,7 +55,7 @@ const SignUp = () => {
 
             <div className="flex flex-1 flex-col gap-2 md:gap-4 items-center justify-center">
                 <h2 className="text-2xl font-semibold">Sign Up</h2>
-                <div className="card bg-primary w-[19rem] md:w-full max-w-sm shrink-0 rounded-2xl shadow-2xl shadow-primary text-base-100">
+                <div className="card bg-primary w-[19rem] md:w-full max-w-sm shrink-0 rounded shadow-2xl shadow-primary text-base-100">
                     <form onSubmit={handleSubmit} className="card-body">
                         <fieldset className="fieldset gap-0.5 md:gap-1.5">
 
@@ -122,7 +122,7 @@ const SignUp = () => {
                             </span>
                         </div>
                         )}
-                        <button className="btn btn-primary text-white border-base-100 rounded-2xl mt-4">Sign Up</button>
+                        <button type="submit" className="btn btn-primary text-white border-base-100 rounded-2xl mt-4">Sign Up</button>
                         </fieldset>
                         <p className="text-center text-sm">Already have an account? 
                             <Link to={'/auth/login'} className="underline font-semibold">Log in</Link>
