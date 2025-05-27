@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../providers/AuthProvider';
 
 const Navbar = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useContext(AuthContext)
 
   return (
     <nav className="bg-white border-gray-200 font-poppins">
@@ -14,30 +16,39 @@ const Navbar = () => {
         </a>
 
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <div className='md:space-x-2'>
+          {
+            !user && <div className='md:space-x-2'>
             <Link to={'/auth/login'} ><button className='btn btn-sm lg:btn-md border-0 bg-primary text-white rounded-lg'>Login</button></Link>
             <Link to={'/auth/signup'} ><button className='hidden md:inline-block btn lg:btn-md btn-sm md:border-2 border-primary text-primary rounded-lg'>Sign Up</button></Link>
           </div>
-          {/* <button
+          }
+          
+          {
+            user && <button
             type="button"
-            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
+            // md:me-0 
+            className="flex text-sm bg-gray-800 rounded-full  focus:ring-4 focus:ring-gray-300"
             onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
           >
             <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user" />
-          </button> */}
+            <div className="w-10 h-10 rounded-full">
+              <img className="w-full h-full object-cover rounded-full" src={user.photoURL} alt="user" />
+            </div>
+          </button>
+          }
+          
 
           {isUserDropdownOpen && (
             <div className="absolute top-14 right-4 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm">
               <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900">Bonnie Green</span>
-                <span className="block text-sm text-gray-500 truncate">name@flowbite.com</span>
+                <span className="block text-sm text-gray-900">{user?.displayName}</span>
+                <span className="block text-sm text-gray-500 truncate">{user?.email}</span>
               </div>
               <ul className="py-2">
-                <li><a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Dashboard</a></li>
-                <li><a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Settings</a></li>
-                <li><a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Earnings</a></li>
-                <li><a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Sign out</a></li>
+                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Dashboard</li>
+                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Settings</li>
+                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Earnings</li>
+                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Sign out</li>
               </ul>
             </div>
           )}
