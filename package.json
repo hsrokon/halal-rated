@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
+    "firebase": "^11.8.1",
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.2",
     "react": "^19.1.0",
@@ -18,6 +19,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
     "sort-by": "^1.2.0",
+    "sweetalert2": "^11.22.0",
     "tailwindcss": "^4.1.7",
     "three": "^0.176.0",
     "typewriter-effect": "^2.22.0"

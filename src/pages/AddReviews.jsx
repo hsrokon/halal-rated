@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoIosLink } from "react-icons/io";
+import Swal from "sweetalert2";
 
 const AddReviews = () => {
   const [countriesData, setCountriesData] = useState([]);
@@ -92,7 +93,28 @@ const AddReviews = () => {
       honestyConsent,
       userDisplay,
     }
-    console.log(userReviewData);
+    
+    Swal.fire({
+      title: "Do you want to submit?",
+      text: "After posting you can anytime edit this review from your profile!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, post it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(userReviewData);
+
+        fetch()
+        
+        Swal.fire({
+          title: "Posted!",
+          text: "Your file has been posted.",
+          icon: "success"
+        });
+      }
+    });
   };
 
 
