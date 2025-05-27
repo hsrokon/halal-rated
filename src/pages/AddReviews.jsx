@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { IoIosLink } from "react-icons/io";
 
 const AddReviews = () => {
   const [countriesData, setCountriesData] = useState([]);
@@ -66,12 +67,12 @@ const AddReviews = () => {
 
   return (
     <div className="font-poppins mt-4 w-11/12 max-w-4xl mx-auto min-h-screen">
-      <h1 className="text-3xl text-center">Add Trusted Halal Spots</h1>
+      <h1 className="text-3xl font-semibold text-center">Add Trusted Halal Spots</h1>
       <h2 className="text-xl text-center mt-1 text-primary italic">
         Help the Ummah discover authentic Rizq.
       </h2>
 
-      <form onSubmit={handleSubmit} className="my-10 space-y-6 px-4">
+      <form onSubmit={handleSubmit} className="my-14 space-y-8 px-4">
 
         {/*---------- shop region and location */}
         <div className="flex flex-col gap-2 lg:gap-6 lg:flex-row lg:justify-around lg:items-end">
@@ -248,7 +249,7 @@ const AddReviews = () => {
             <label className="label">
                   <span className="label-text text-primary">&#10095; What stood out to you?</span>
             </label>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-sm md:text-base">
               <label className="label cursor-pointer ml-8">
                     <input 
                     type="checkbox"
@@ -284,6 +285,24 @@ const AddReviews = () => {
             </div>
             
           </div>
+        </div>
+
+        {/* photo upload */}
+        <div className="flex flex-col">
+          <label className="label">
+                  <span className="label-text text-primary">&#10095; Upload Photo Link <span className="font-semibold italic">(Highly recommended)</span></span>
+          </label>
+          <label className="input validator border-2 border-primary rounded">
+            <IoIosLink className="text-xl" />
+            <input
+              type="url"
+              required
+              placeholder="https://"
+              pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
+              title="Must be valid URL"
+            />
+          </label>
+          <p className="validator-hint">Must be valid URL</p>
         </div>
         
         
