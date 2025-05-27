@@ -63,14 +63,14 @@ const SignUp = () => {
                         <input 
                         type="text" 
                         name="name"
-                        className="input rounded-2xl text-base-content" 
+                        className="input rounded text-base-content w-full" 
                         placeholder="Name" />
 
                         <label className="text-sm">Photo URL</label>
                         <input 
                         type="text" 
                         name="photo"
-                        className="input rounded-2xl text-base-content" 
+                        className="input rounded text-base-content w-full" 
                         placeholder="Profile photo URL" />
 
                         <label className="text-sm">Email</label>
@@ -78,7 +78,7 @@ const SignUp = () => {
                         type="email" 
                         required
                         name="email"
-                        className="input rounded-2xl text-base-content" 
+                        className="input rounded text-base-content w-full" 
                         placeholder="Email" />
 
                         <label className="text-sm">Password</label>
@@ -88,11 +88,11 @@ const SignUp = () => {
                             type={`${showPass ? 'text' : 'password'}`} 
                             name="pass"
                             required
-                            className="input rounded-2xl text-base-content" 
+                            className="input rounded text-base-content w-full" 
                             placeholder="Password" />
                             <button 
                             onClick={()=> setShowPass(!showPass)}
-                            className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 text-base-content text-lg z-20">
+                            className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 text-base-content text-lg z-20">
                                 {
                                     showPass ? <FaEyeSlash /> : <FaEye/>
                                 }</button>
@@ -122,7 +122,7 @@ const SignUp = () => {
                             </span>
                         </div>
                         )}
-                        <button type="submit" className="btn btn-primary text-white border-base-100 rounded-2xl mt-4">Sign Up</button>
+                        <button type="submit" className="btn btn-primary text-white border-base-100 rounded mt-4">Sign Up</button>
                         </fieldset>
                         <p className="text-center text-sm">Already have an account? 
                             <Link to={'/auth/login'} className="underline font-semibold">Log in</Link>
