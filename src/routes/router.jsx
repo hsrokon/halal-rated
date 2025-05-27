@@ -4,12 +4,13 @@ import Banner from "../components/banner/Banner";
 import Shops from "../pages/Shops";
 import Home from "../pages/Home";
 import AddReviews from "../pages/AddReviews";
+import SignUp from "../pages/SignUp";
 
 
 const router = createBrowserRouter([
     {
-        element: <MainLayout></MainLayout>,
         path: '/',
+        element: <MainLayout></MainLayout>,
         children: [
             {
                 path: '/',
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: '/auth/signup',
+        element: <SignUp></SignUp>
+    }
 ])
 
 export default router;

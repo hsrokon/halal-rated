@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
@@ -15,8 +15,8 @@ const Navbar = () => {
 
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className='md:space-x-2'>
-            <button className='btn btn-sm lg:btn-md border-0 bg-primary text-white rounded-lg'>Login</button>
-            <button className='hidden md:inline-block btn lg:btn-md btn-sm border-2 border-primary text-primary rounded-lg'>Sign Up</button>
+            <Link to={'/auth/login'} ><button className='btn btn-sm lg:btn-md border-0 bg-primary text-white rounded-lg'>Login</button></Link>
+            <Link to={'/auth/signup'} ><button className='hidden md:inline-block btn lg:btn-md btn-sm md:border-2 border-primary text-primary rounded-lg'>Sign Up</button></Link>
           </div>
           {/* <button
             type="button"
