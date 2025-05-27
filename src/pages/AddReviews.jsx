@@ -60,16 +60,41 @@ const AddReviews = () => {
       .catch(() => setCities([]));
   }, [country]);
 
+  const [ rating, setRating ] = useState(1);
+  const [ halalCertified, setHalalCertified ] = useState(false);
+  const [ honestyConsent, setHonestyConsent ] = useState(false);
+  const [ userDisplay, setUserDisplay ] = useState(false);
+
+  // Form Submit
   const handleSubmit = e => {
     e.preventDefault();
-    console.log({ region, country, city });
+    
+    const form = e.target;
+    const shopName = form.shopName.value;
+    const shopSpecificLocation = form.shopSpecificLocation.value;
+    const reviewArea = form.reviewArea.value;
+    const selectedTags = Array.from(form.tags)
+          .filter(input => input.checked)
+          .map(input => input.value);
+    const photoURL = form.photoURL.value;
+
+    const userReviewData = {
+      region,
+      country,
+      city,
+      shopName,
+      shopSpecificLocation,
+      rating,
+      reviewArea,
+      halalCertified,
+      selectedTags,
+      photoURL,
+      honestyConsent,
+      userDisplay,
+    }
+    console.log(userReviewData);
+    
   };
-
-
-  const [ consent, setConsent ] = useState(false)
-  const handleHonestConcent = e => {
-    setConsent(e.target.checked)
-  }
 
 
 
@@ -84,8 +109,10 @@ const AddReviews = () => {
 
         {/*---------- shop region and location */}
         <div className="flex flex-col gap-2 lg:gap-6 lg:flex-row lg:justify-around lg:items-end">
+
           {/* Region */}
           <div className="w-full md:w-2/4 md:mx-auto lg:mx-0 lg:w-1/3">
+
             <label className="label">
               <span className="label-text text-primary">&#10095; Select Region</span>
             </label>
@@ -93,7 +120,7 @@ const AddReviews = () => {
               className="select select-bordered w-full border-2 border-primary rounded"
               value={region}
               required
-              onChange={(e) => setRegion(e.target.value)}
+              onChange={e => setRegion(e.target.value)}
             >
               <option value="" disabled>
                 Choose a region
@@ -162,7 +189,7 @@ const AddReviews = () => {
             </span>
             
             <input type="text" 
-            name="shop-name" 
+            name="shopName" 
             required
             placeholder="E.g. Al-Noor Halal Store" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs 
@@ -176,7 +203,7 @@ const AddReviews = () => {
             </span>
             
             <input type="text" 
-            name="shop-specific-location" 
+            name="shopSpecificLocation" 
             required
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs
@@ -194,22 +221,32 @@ const AddReviews = () => {
               type="radio" 
               name="rating"
               required
+              value="1"
+              onChange={e =>setRating(Number(e.target.value))}
               className="mask mask-star-2 bg-green-700"  />
               <input 
               type="radio" 
               name="rating"
+              value="2"
+              onChange={e=>setRating(Number(e.target.value))}
               className="mask mask-star-2 bg-green-700"  />
               <input 
               type="radio" 
               name="rating"
+              value="3"
+              onChange={e=>setRating(Number(e.target.value))}
               className="mask mask-star-2 bg-green-700"  />
               <input 
               type="radio" 
               name="rating"
+              value="4"
+              onChange={e=>setRating(Number(e.target.value))}
               className="mask mask-star-2 bg-green-700"  />
               <input 
               type="radio" 
               name="rating"
+              value="5"
+              onChange={e=>setRating(Number(e.target.value))}
               className="mask mask-star-2 bg-green-700"  /> 
             </div>
           </label>
@@ -221,7 +258,7 @@ const AddReviews = () => {
             <span className="label-text text-primary">&#10095; Your Review</span>
             
             <textarea 
-            name="review-area"
+            name="reviewArea"
             required
             className="text-area w-full md:w-1/2 md:h-40 h-32 text-sm lg:text-base lg:w-96 lg:h-52 rounded border-2 border-primary p-2 placeholder:text-gray-600 text-base-content"
             placeholder="Write your review. We trust you..."
@@ -241,6 +278,7 @@ const AddReviews = () => {
                   <input 
                   type="radio" name="halalCertified"
                   value="Yes" 
+                  onChange={()=> setHalalCertified(true)}
                   className="radio checked:bg-green-600 ml-2 border-2" />
                 </label>
                 <label className="label cursor-pointer ml-8">
@@ -248,6 +286,7 @@ const AddReviews = () => {
                   <input 
                   type="radio" name="halalCertified"
                   value="No" 
+                  onChange={()=> setHalalCertified(false)}
                   className="radio checked:bg-gray-500 ml-3 border-2" />
                 </label>
           </div>
@@ -261,37 +300,36 @@ const AddReviews = () => {
               <label className="label cursor-pointer ml-8">
                     <input 
                     type="checkbox"
-                    name="halalCertified"
-                    value="Yes" 
+                    name="tags"
+                    value="Clean Environment" 
                     className="checkbox checkbox-success mr-2 border-2" />
                     <span className="label-text text-primary">Clean Environment</span>
               </label>
               <label className="label cursor-pointer ml-8">
                     <input 
                     type="checkbox"
-                    name="halalCertified"
-                    value="Yes" 
+                    name="tags"
+                    value="Zabiha Verified" 
                     className="checkbox checkbox-success mr-2 border-2" />
                     <span className="label-text text-primary">Zabiha/Halal Verified</span>
               </label>
               <label className="label cursor-pointer ml-8">
                     <input 
                     type="checkbox"
-                    name="halalCertified"
-                    value="Yes" 
+                    name="tags"
+                    value="Affordable Prices"  
                     className="checkbox checkbox-success mr-2 border-2" />
                     <span className="label-text text-primary">Affordable Prices</span>
               </label>
               <label className="label cursor-pointer ml-8">
                     <input 
                     type="checkbox"
-                    name="halalCertified"
-                    value="Yes" 
+                    name="tags"
+                    value="Friendly Staff" 
                     className="checkbox checkbox-success mr-2 border-2" />
                     <span className="label-text text-primary">Friendly Staff</span>
               </label>
             </div>
-            
           </div>
         </div>
 
@@ -305,6 +343,7 @@ const AddReviews = () => {
             <input
               type="url"
               required
+              name="photoURL"
               placeholder="https://"
               pattern="^(https?://)?([a-zA-Z0-9]([a-zA-Z0-9\-].*[a-zA-Z0-9])?\.)+[a-zA-Z].*$"
               title="Must be valid URL"
@@ -317,31 +356,34 @@ const AddReviews = () => {
         {/* ------consent */}
         <div className="flex flex-col gap-4">
           <h3 className="text-primary">&#10095; Final Consent</h3>
-          <label className="label cursor-pointer ml-8">
+          <div className="label cursor-pointer ml-8">
                 <input 
                 type="checkbox"
-                onChange={handleHonestConcent}
+                id="userDisplay"
+                onChange={e => setHonestyConsent(e.target.checked)}
                 required
                 value="Yes" 
                 className="checkbox checkbox-success mr-2 border-2" />
                 <span className="label-text text-primary font-semibold text-wrap text-sm md:text-base">I confirm that my review is honest and based on my actual experience.</span>
-            </label>
-          <label className="label cursor-pointer ml-8">
+            </div>
+          <div className="label cursor-pointer ml-8">
                 <input 
                 type="checkbox"
+                id="consent"
                 required
                 value="Yes" 
+                onChange={e => setUserDisplay(e.target.checked)}
                 className="checkbox checkbox-success mr-2 border-2" />
                 <span className="label-text text-primary font-semibold text-wrap text-sm md:text-base">I allow my name or profile or both info to be shown with this review.</span>
-            </label>
+          </div>
         </div>
 
         {/* ----submit  */}
         <div className="flex justify-center my-10">
           <button 
           type="submit" 
-          disabled={!consent}
-          className={`btn ${!consent ? 'border-2 border-primary' : 'text-white bg-primary'}  rounded px-10 py-6 text-base`}>Submit Review</button>
+          disabled={!honestyConsent}
+          className={`btn ${!honestyConsent ? 'border-2 border-primary' : 'text-white bg-primary'}  rounded px-10 py-6 text-base`}>Submit Review</button>
         </div>
       </form>
     </div>
