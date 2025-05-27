@@ -1,18 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import { TbLogout } from 'react-icons/tb';
 
 const Navbar = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user } = useContext(AuthContext)
+  const { user, logOutUser } = useContext(AuthContext);
+
+  // user drop down and focusring handle 
+  const dropdownRef = useRef(null);
+  const userButtonRef = useRef(null);
+  useEffect(()=>{
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) &&
+      userButtonRef.current && !userButtonRef.current.contains(event.target)
+      ) {
+        setIsUserDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  },[])
+
+  const handleLogOut = () => {
+    logOutUser()
+    .then()
+    .catch(error => {
+      console.log("Sign out error", error);
+    })
+  }
 
   return (
     <nav className="bg-white border-gray-200 font-poppins">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={'https://i.ibb.co/tp2thjR1/tr-ffl.png'} className="h-8" alt="Logo" />
-          {/* <span className="self-center text-2xl font-semibold whitespace-nowrap text-black">Flowbite</span> */}
         </a>
 
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -25,30 +48,34 @@ const Navbar = () => {
           
           {
             user && <button
+            ref={userButtonRef}
             type="button"
             // md:me-0 
-            className="flex text-sm bg-gray-800 rounded-full  focus:ring-4 focus:ring-gray-300"
-            onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+            className={`flex text-sm bg-gray-800 ${isUserDropdownOpen && 'focus:ring-4 focus:ring-green-600'} rounded-full`}
+            onClick={() => setIsUserDropdownOpen(prev => !prev)}
           >
             <span className="sr-only">Open user menu</span>
-            <div className="w-10 h-10 rounded-full">
+            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full">
               <img className="w-full h-full object-cover rounded-full" src={user.photoURL} alt="user" />
             </div>
           </button>
           }
           
-
-          {isUserDropdownOpen && (
-            <div className="absolute top-14 right-4 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm">
+          { user && isUserDropdownOpen && (
+            <div 
+            ref={dropdownRef}
+            className="absolute top-14 right-12 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm">
               <div className="px-4 py-3">
                 <span className="block text-sm text-gray-900">{user?.displayName}</span>
                 <span className="block text-sm text-gray-500 truncate">{user?.email}</span>
               </div>
               <ul className="py-2">
-                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Dashboard</li>
-                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Settings</li>
-                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Earnings</li>
-                <li className="block px-4 py-2 text-sm hover:bg-gray-100">Sign out</li>
+                <li className="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100">Dashboard</li>
+                <li className="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100">Settings</li>
+                <li className="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100">Earnings</li>
+                <li 
+                onClick={handleLogOut}
+                className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">Sign out <TbLogout /></li>
               </ul>
             </div>
           )}
