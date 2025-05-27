@@ -65,7 +65,7 @@ const AddReviews = () => {
   };
 
   return (
-    <div className="font-poppins mt-4 w-11/12 max-w-4xl mx-auto">
+    <div className="font-poppins mt-4 w-11/12 max-w-4xl mx-auto min-h-screen">
       <h1 className="text-3xl text-center">Add Trusted Halal Spots</h1>
       <h2 className="text-xl text-center mt-1 text-primary italic">
         Help the Ummah discover authentic Rizq.
@@ -219,6 +219,73 @@ const AddReviews = () => {
             ></textarea>
           </label>
         </div>
+
+
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-20 my-8">
+          {/* -------Halal certified? */}
+          <div className="flex flex-col items-center gap-2">
+                <label className="label">
+                  <span className="label-text text-primary">&#10095; Did the store display halal certification?</span>
+                </label>
+                <label className="label cursor-pointer ml-8">
+                  <span className="label-text text-primary">Yes</span>
+                  <input 
+                  type="radio" name="halalCertified"
+                  value="Yes" 
+                  className="radio checked:bg-green-600 ml-2 border-2" />
+                </label>
+                <label className="label cursor-pointer ml-8">
+                  <span className="label-text text-primary">No</span>
+                  <input 
+                  type="radio" name="halalCertified"
+                  value="No" 
+                  className="radio checked:bg-gray-500 ml-3 border-2" />
+                </label>
+          </div>
+
+          {/* ------tags  */}
+          <div className="flex flex-col lg:flex-row items-start md:items-center lg:items-start">
+            <label className="label">
+                  <span className="label-text text-primary">&#10095; What stood out to you?</span>
+            </label>
+            <div className="flex flex-col gap-2">
+              <label className="label cursor-pointer ml-8">
+                    <input 
+                    type="checkbox"
+                    name="halalCertified"
+                    value="Yes" 
+                    className="checkbox checkbox-success mr-2 border-2" />
+                    <span className="label-text text-primary">Clean Environment</span>
+              </label>
+              <label className="label cursor-pointer ml-8">
+                    <input 
+                    type="checkbox"
+                    name="halalCertified"
+                    value="Yes" 
+                    className="checkbox checkbox-success mr-2 border-2" />
+                    <span className="label-text text-primary">Zabiha/Halal Verified</span>
+              </label>
+              <label className="label cursor-pointer ml-8">
+                    <input 
+                    type="checkbox"
+                    name="halalCertified"
+                    value="Yes" 
+                    className="checkbox checkbox-success mr-2 border-2" />
+                    <span className="label-text text-primary">Affordable Prices</span>
+              </label>
+              <label className="label cursor-pointer ml-8">
+                    <input 
+                    type="checkbox"
+                    name="halalCertified"
+                    value="Yes" 
+                    className="checkbox checkbox-success mr-2 border-2" />
+                    <span className="label-text text-primary">Friendly Staff</span>
+              </label>
+            </div>
+            
+          </div>
+        </div>
+        
         
       </form>
     </div>
