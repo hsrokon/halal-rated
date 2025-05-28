@@ -91,6 +91,7 @@ const SignUp = () => {
                             className="input rounded text-base-content w-full" 
                             placeholder="Password" />
                             <button 
+                            type="button"
                             onClick={()=> setShowPass(!showPass)}
                             className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 text-base-content text-lg z-20">
                                 {

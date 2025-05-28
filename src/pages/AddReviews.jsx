@@ -67,6 +67,22 @@ const AddReviews = () => {
   const [ draftData, setDraftData ] = useState(null);
   const [pendingCountry, setPendingCountry] = useState('');
   const [pendingCity, setPendingCity] = useState('');
+  //place naming
+  const [ placeType, setPlaceType ] = useState("");
+  const formatDisplayType = (placeType, isStartOfSentence = false) => {
+  if (!placeType) return isStartOfSentence ? "Place" : "place";
+  if (placeType === "Others") return isStartOfSentence ? "Establishment" : "establishment";
+
+  // Capitalize if it's the start of a sentence
+  return isStartOfSentence
+    ? placeType.charAt(0).toUpperCase() + placeType.slice(1)
+    : placeType.toLowerCase();
+  };
+  const displayType = formatDisplayType(placeType);
+  const displayTypeCapital = formatDisplayType(placeType, true);
+
+
+
 
   //session storage for draft data
   useEffect(()=>{
@@ -84,6 +100,7 @@ const AddReviews = () => {
       setHonestyConsent(data.honestyConsent || false);
       setUserDisplay(data.userDisplay || false);
       setSelectedTags(data.selectedTags || []);
+      setPlaceType(data.placeType || "");
 
       setDraftData(data);
     }
@@ -115,6 +132,7 @@ const AddReviews = () => {
   setCountry('');
   setCity('');
   setRating(0);
+  setPlaceType("");
   setHalalCertified(false);
   setHonestyConsent(false);
   setUserDisplay(false);
@@ -150,6 +168,7 @@ const AddReviews = () => {
         country,
         city,
         rating,
+        placeType,
         halalCertified,
         honestyConsent,
         userDisplay,
@@ -181,6 +200,7 @@ const AddReviews = () => {
       shopName,
       shopSpecificLocation,
       rating,
+      placeType,
       reviewArea,
       halalCertified,
       selectedTags,
@@ -202,15 +222,16 @@ const AddReviews = () => {
       if (result.isConfirmed) {
         console.log(userReviewData);
 
+        //for server fetch
         fetch('http://localhost:5000/reviews', {
           method: 'POST',
           headers: {'content-type': 'application/json'},
           body: JSON.stringify(userReviewData)
-        })//for server fetch
-        // .then(res => res.json())
-        // .then(data => {
-          // console.log(data);
-        // })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
         
         Swal.fire({
           title: "Posted!",
@@ -241,7 +262,7 @@ const AddReviews = () => {
 
       <form onSubmit={handleSubmit} className="my-14 space-y-8 px-4">
 
-        {/*---------- shop region and location */}
+        {/*---------- place region and location */}
         <div className="flex flex-col gap-2 lg:gap-6 lg:flex-row lg:justify-around lg:items-end">
 
           {/* Region */}
@@ -317,19 +338,42 @@ const AddReviews = () => {
           </div>
         </div>
 
-        {/*--------shop Name location and rating */}
+        <div className="flex flex-col  items-center gap-2">
+              <label className="label">
+                <span className="label-text text-primary">&#10095; What type of place is it?</span>
+              </label>
+              <div className="flex flex-col items-end gap-2">
+                {['Shop', 'Restaurant', 'Cafe', 'Butcher', 'Others'].map((type) => (
+                <label key={type} className="label cursor-pointer ml-8">
+                  <span className="label-text text-primary">{type}</span>
+                  <input
+                    type="radio"
+                    name="placeType"
+                    required
+                    value={type}
+                    checked={placeType === type}
+                    onChange={() => setPlaceType(type)}
+                    className="radio checked:bg-green-600 ml-2 border-2"
+                  />
+                </label>
+                ))}
+              </div>
+              
+        </div>
+
+        {/*--------place Name location and rating */}
         <div className="flex flex-col lg:flex-row justify-between">
           <label className="label flex-col items-start w-full
           md:w-2/4 lg:w-full mx-auto">
             <span className="label-text text-primary">
-            &#10095;  Shop Name
+            &#10095;  {displayTypeCapital} Name 
             </span>
             
             <input type="text" 
             name="shopName" 
             defaultValue={draftData?.shopName}
             required
-            placeholder="E.g. Al-Noor Halal Store" 
+            placeholder={`E.g. Al-Noor Halal ${displayTypeCapital}`} 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
             placeholder:text-gray-500"/>
           </label>
@@ -337,7 +381,7 @@ const AddReviews = () => {
           <label className="label flex-col items-start w-full
           md:w-2/4 lg:w-full mx-auto">
             <span className="label-text text-primary">
-            &#10095;  Shop Specific Location
+            &#10095;  {displayTypeCapital} Specific Location
             </span>
             
             <input type="text" 
@@ -373,7 +417,7 @@ const AddReviews = () => {
         </div>
 
         {/*----- shop review  */}
-        <div>
+        <div className="">
           <label className="label flex flex-col">
             <span className="label-text text-primary">&#10095; Your Review</span>
             
@@ -392,7 +436,7 @@ const AddReviews = () => {
           {/* -------Halal certified? */}
           <div className="flex flex-col items-center gap-2">
                 <label className="label">
-                  <span className="label-text text-primary">&#10095; Did the store display halal certification?</span>
+                  <span className="label-text text-primary">&#10095; Did the {displayType} display halal certification?</span>
                 </label>
                 <label className="label cursor-pointer ml-8">
                   <span className="label-text text-primary">Yes</span>
