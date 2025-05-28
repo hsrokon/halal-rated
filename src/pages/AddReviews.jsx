@@ -231,23 +231,24 @@ const AddReviews = () => {
         .then(res => res.json())
         .then(data => {
           console.log(data);
-        })
-        
-        Swal.fire({
-          title: "Posted!",
-          text: "Your file has been posted.",
-          icon: "success"
-        });
+          if (data.insertedId) {
+            Swal.fire({
+            title: "Posted!",
+            text: "Your file has been posted.",
+            icon: "success"
+          });
 
-        //resetting
-        sessionStorage.removeItem('pendingReview');
-        form.reset();
-        resetFormState();
-        form.placeName.value = '';
-        form.placeSpecificLocation.value = '';
-        form.reviewArea.value = '';
-        form.photoURL.value = '';
-        navigate('/');
+          //resetting
+          sessionStorage.removeItem('pendingReview');
+          form.reset();
+          resetFormState();
+          form.placeName.value = '';
+          form.placeSpecificLocation.value = '';
+          form.reviewArea.value = '';
+          form.photoURL.value = '';
+          navigate('/');
+          }
+        })
       }
     });
   };
@@ -549,3 +550,19 @@ const AddReviews = () => {
 };
 
 export default AddReviews;
+
+
+// import { formatDistanceToNow } from 'date-fns';
+
+// const agoText = formatDistanceToNow(new Date(review.createdAt), { addSuffix: true });
+// // Output: "3 days ago"
+
+// | Feature                 | Benefit                                |
+// | ----------------------- | -------------------------------------- |
+// | ⏱ `createdAt` timestamp | Enables "posted X time ago", sorting   |
+// | 🔍 Review filtering     | By city, tag, rating, halal certified  |
+// | 🧠 Intelligent defaults | Autofill region/country from user IP   |
+// | 🖼 Image preview        | Show preview of photo URL              |
+// | ✏️ Edit reviews         | Add a user panel with editable history |
+// | 📊 Review stats         | Avg rating, tag frequency, total count |
+// | 🧾 Review summaries     | Tag clouds, most common words          |
