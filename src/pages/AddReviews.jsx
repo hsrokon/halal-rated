@@ -172,6 +172,7 @@ const AddReviews = () => {
           .filter(input => input.checked)
           .map(input => input.value);
     const photoURL = form.photoURL.value;
+    const userEmail = user.email;
 
     const userReviewData = {
       region,
@@ -186,6 +187,7 @@ const AddReviews = () => {
       photoURL,
       honestyConsent,
       userDisplay,
+      userEmail,
     }
     
     Swal.fire({
@@ -200,7 +202,15 @@ const AddReviews = () => {
       if (result.isConfirmed) {
         console.log(userReviewData);
 
-        fetch()//for server fetch
+        fetch('http://localhost:5000/reviews', {
+          method: 'POST',
+          headers: {'content-type': 'application/json'},
+          body: JSON.stringify(userReviewData)
+        })//for server fetch
+        // .then(res => res.json())
+        // .then(data => {
+          // console.log(data);
+        // })
         
         Swal.fire({
           title: "Posted!",
@@ -351,6 +361,7 @@ const AddReviews = () => {
                 key={num}
                 type="radio"
                 name="rating"
+                required
                 value={num}
                 checked={rating===num}
                 onChange={e => setRating(Number(e.target.value))}
@@ -472,7 +483,7 @@ const AddReviews = () => {
                 <input 
                 type="checkbox"
                 id="consent"
-                required
+                // required
                 value="Yes" 
                 onChange={e => setUserDisplay(e.target.checked)}
                 checked={userDisplay}
