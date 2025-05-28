@@ -432,9 +432,8 @@ const AddReviews = () => {
           </label>
         </div>
 
-
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-20 my-8">
-          {/* -------Halal certified? */}
+          {/* -------Halal certified?*/}
           <div className="flex flex-col items-center gap-2">
                 <label className="label">
                   <span className="label-text text-primary">&#10095; Did the {displayType} display halal certification?</span>
@@ -552,6 +551,7 @@ const AddReviews = () => {
 export default AddReviews;
 
 
+// For further improvements in near future Insha Allah
 // import { formatDistanceToNow } from 'date-fns';
 
 // const agoText = formatDistanceToNow(new Date(review.createdAt), { addSuffix: true });
