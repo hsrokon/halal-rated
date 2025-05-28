@@ -157,8 +157,8 @@ const AddReviews = () => {
     if (!user) {
       const form = e.target;
       const saveReviewDraft = {
-        shopName : form.shopName.value,
-        shopSpecificLocation : form.shopSpecificLocation.value,
+        placeName : form.placeName.value,
+        placeSpecificLocation : form.placeSpecificLocation.value,
         reviewArea : form.reviewArea.value,
         selectedTags : Array.from(form.tags)
               .filter(input => input.checked)
@@ -184,8 +184,8 @@ const AddReviews = () => {
     }
 
     const form = e.target;
-    const shopName = form.shopName.value;
-    const shopSpecificLocation = form.shopSpecificLocation.value;
+    const placeName = form.placeName.value;
+    const placeSpecificLocation = form.placeSpecificLocation.value;
     const reviewArea = form.reviewArea.value;
     const selectedTags = Array.from(form.tags)
           .filter(input => input.checked)
@@ -197,8 +197,8 @@ const AddReviews = () => {
       region,
       country,
       city,
-      shopName,
-      shopSpecificLocation,
+      placeName,
+      placeSpecificLocation,
       rating,
       placeType,
       reviewArea,
@@ -243,8 +243,8 @@ const AddReviews = () => {
         sessionStorage.removeItem('pendingReview');
         form.reset();
         resetFormState();
-        form.shopName.value = '';
-        form.shopSpecificLocation.value = '';
+        form.placeName.value = '';
+        form.placeSpecificLocation.value = '';
         form.reviewArea.value = '';
         form.photoURL.value = '';
         navigate('/');
@@ -370,8 +370,8 @@ const AddReviews = () => {
             </span>
             
             <input type="text" 
-            name="shopName" 
-            defaultValue={draftData?.shopName}
+            name="placeName" 
+            defaultValue={draftData?.placeName}
             required
             placeholder={`E.g. Al-Noor Halal ${displayTypeCapital}`} 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
@@ -385,8 +385,8 @@ const AddReviews = () => {
             </span>
             
             <input type="text" 
-            name="shopSpecificLocation" 
-            defaultValue={draftData?.shopSpecificLocation}
+            name="placeSpecificLocation" 
+            defaultValue={draftData?.placeSpecificLocation}
             required
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
@@ -416,7 +416,7 @@ const AddReviews = () => {
           </label>
         </div>
 
-        {/*----- shop review  */}
+        {/*----- place review  */}
         <div className="">
           <label className="label flex flex-col">
             <span className="label-text text-primary">&#10095; Your Review</span>
