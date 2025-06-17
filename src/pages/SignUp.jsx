@@ -45,7 +45,7 @@ const SignUp = () => {
                 body: JSON.stringify(userInfo)
             })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then()
 
             updateUserProfile(displayName, photoURL)
             .then()
