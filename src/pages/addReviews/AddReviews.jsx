@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
