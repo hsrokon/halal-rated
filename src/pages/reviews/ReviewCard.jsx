@@ -2,6 +2,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import './card.css';
 import { FaHeart } from 'react-icons/fa';
 import { MdArrowOutward } from 'react-icons/md';
+import { useEffect, useState } from 'react';
 
 const ReviewCard = ({ review }) => {
   const { 
@@ -21,6 +22,15 @@ const ReviewCard = ({ review }) => {
         userEmail, 
     } = review;
 
+    const [ reviewUser, setReviewUser ] = useState([]);
+    useEffect(()=>{
+      if (userDisplay) {
+        fetch(`http://localhost:5000/users/${userEmail}`)
+        .then(res => res.json())
+        .then(data => setReviewUser(data))
+      }
+    },[userDisplay])
+
   return (
     <div className="review-card-wrapper grid grid-cols-2 w-full">
       <div className='h-full col-span-1 w-full'>
@@ -29,6 +39,12 @@ const ReviewCard = ({ review }) => {
       <div className="review-card-body col-span-1">
         <h3 className="review-smalltitle">{placeType}</h3>
         <h1 className="review-title">{placeName}</h1>
+        <div className='flex items-center gap-2'>
+          <div className='w-10 h-10'>
+            <img src={reviewUser.photoURL} className='w-full h-full object-cover rounded-full' />
+          </div>
+          <h5>{reviewUser.displayName}</h5>
+        </div>
         <p className="review-description">
           {reviewArea}
         </p>
