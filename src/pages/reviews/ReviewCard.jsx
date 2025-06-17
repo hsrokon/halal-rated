@@ -45,31 +45,30 @@ const ReviewCard = ({ review }) => {
           }
           
         </div>
+        {/* this is for shop rating */}
+        {/* <div className="rating">
+          {[1, 2, 3, 4, 5].map((i) => {
+            const full = i <= Math.floor(rating);
+            const half = i - rating > -1 && i - rating < 1;
 
-{/* this is for shop rating */}
-{/* <div className="rating">
-  {[1, 2, 3, 4, 5].map((i) => {
-    const full = i <= Math.floor(rating);
-    const half = i - rating > -1 && i - rating < 1;
-
-    return (
-      <input
-        key={i}
-        type="radio"
-        name={`rating-${placeName}`}
-        className={`mask mask-star-2 ${
-          full
-            ? 'bg-green-700'
-            : half
-            ? 'bg-green-300'
-            : 'bg-base-200'
-        }`}
-        checked
-        readOnly
-      />
-    );
-  })}
-</div> */}
+            return (
+              <input
+                key={i}
+                type="radio"
+                name={`rating-${placeName}`}
+                className={`mask mask-star-2 ${
+                  full
+                    ? 'bg-green-700'
+                    : half
+                    ? 'bg-green-300'
+                    : 'bg-base-200'
+                }`}
+                checked
+                readOnly
+              />
+            );
+          })}
+        </div> */}
 
         <div className='flex gap-2'>
             <button className="review-button">

@@ -32,6 +32,21 @@ const SignUp = () => {
         .then(credential =>{
             const user = credential.user;
             setUser(user)
+            console.log(user);
+            const firstSignedUp = user.metadata.createdAt;;
+            const lastLoggedIn = user.metadata.lastLoginAt;
+            
+            const userInfo = { email, displayName, photoURL, firstSignedUp, lastLoggedIn};
+            fetch('http://localhost:5000/users', {
+                method : 'POST',
+                headers: {
+                    'content-type' : 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+
             updateUserProfile(displayName, photoURL)
             .then()
             .catch(error => {
