@@ -223,7 +223,7 @@ const AddReviews = () => {
         console.log(userReviewData);
 
         //for server fetch
-        fetch('http://localhost:5000/reviews', {
+        fetch('http://localhost:5000/addReviews', {
           method: 'POST',
           headers: {'content-type': 'application/json'},
           body: JSON.stringify(userReviewData)
