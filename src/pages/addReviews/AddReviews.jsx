@@ -82,8 +82,6 @@ const AddReviews = () => {
   const displayTypeCapital = formatDisplayType(placeType, true);
 
 
-
-
   //session storage for draft data
   useEffect(()=>{
     const draft = sessionStorage.getItem('pendingReview');
