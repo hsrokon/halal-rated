@@ -16,7 +16,7 @@ const AddReviews = () => {
 
   // Fetched all countries from REST Countries
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
+    fetch("https://restcountries.com/v3.1/all?fields=name,region")
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort((a, b) =>
@@ -80,6 +80,21 @@ const AddReviews = () => {
   };
   const displayType = formatDisplayType(placeType);
   const displayTypeCapital = formatDisplayType(placeType, true);
+
+
+  //getting existing shop
+  const [ existingShops, setExistingShops ] = useState([]);
+  const [ useExistingShop, setUseExistingShop ] = useState(true);
+  const [ selectedPlaceName, setSelectedPlaceName ] = useState('');
+  const [ selectedPlaceSpecificLocation, setSelectedPlaceSpecificLocation ] = useState('');
+
+  useEffect(()=>{
+    if (region && country && city) {
+      fetch(`http://localhost:5000/shops?region=${region}&country=${country}&city=${city}`)
+      .then(res => res.json())
+      .then(data => setExistingShops(data))
+    }
+  },[region, country, city])
 
 
   //session storage for draft data
@@ -220,33 +235,33 @@ const AddReviews = () => {
       if (result.isConfirmed) {
         console.log(userReviewData);
 
-        //for server fetch
-        fetch('http://localhost:5000/addReviews', {
-          method: 'POST',
-          headers: {'content-type': 'application/json'},
-          body: JSON.stringify(userReviewData)
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          if (data.insertedId) {
-            Swal.fire({
-            title: "Posted!",
-            text: "Your file has been posted.",
-            icon: "success"
-          });
+        // //for server fetch
+        // fetch('http://localhost:5000/addReviews', {
+        //   method: 'POST',
+        //   headers: {'content-type': 'application/json'},
+        //   body: JSON.stringify(userReviewData)
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //   console.log(data);
+        //   if (data.insertedId) {
+        //     Swal.fire({
+        //     title: "Posted!",
+        //     text: "Your file has been posted.",
+        //     icon: "success"
+        //   });
 
-          //resetting
-          sessionStorage.removeItem('pendingReview');
-          form.reset();
-          resetFormState();
-          form.placeName.value = '';
-          form.placeSpecificLocation.value = '';
-          form.reviewArea.value = '';
-          form.photoURL.value = '';
-          navigate('/');
-          }
-        })
+        //   //resetting
+        //   sessionStorage.removeItem('pendingReview');
+        //   form.reset();
+        //   resetFormState();
+        //   form.placeName.value = '';
+        //   form.placeSpecificLocation.value = '';
+        //   form.reviewArea.value = '';
+        //   form.photoURL.value = '';
+        //   navigate('/');
+        //   }
+        // })
       }
     });
   };
@@ -337,7 +352,7 @@ const AddReviews = () => {
           </div>
         </div>
 
-        <div className="flex flex-col  items-center gap-2">
+        <div className="flex flex-col items-center gap-2">
               <label className="label">
                 <span className="label-text text-primary">&#10095; What type of place is it?</span>
               </label>
@@ -360,6 +375,44 @@ const AddReviews = () => {
               
         </div>
 
+        {existingShops.length > 0 && (
+          <div className="flex flex-col lg:inline-block items-center md:w-1/2 mx-auto">
+            <label className="label text-primary">&#10095; Select Existing Place or Add New</label>
+
+            <select
+              className="select select-bordered w-full border-2 rounded border-primary"
+              disabled={!useExistingShop}
+              defaultValue={`${draftData?.placeName} - ${draftData?.placeSpecificLocation}`}
+              onChange={e => {
+                const selected = existingShops.find(
+                  s => `${s.placeName} - ${s.placeSpecificLocation}` === e.target.value
+                );
+                setSelectedPlaceName(selected?.placeName || "");
+                setSelectedPlaceSpecificLocation(selected?.placeSpecificLocation || "");
+              }}
+            >
+              <option value="">Select a place</option>
+              {existingShops.map((shop, idx) => (
+                <option key={idx} value={`${shop.placeName} - ${shop.placeSpecificLocation}`}>
+                  {shop.placeName} - {shop.placeSpecificLocation}
+                </option>
+              ))}
+            </select>
+
+
+            <label className="label cursor-pointer mt-2">
+              <input
+                type="checkbox"
+                checked={!useExistingShop}
+                onChange={() => setUseExistingShop(!useExistingShop)}
+                className="checkbox checkbox-success mr-2"
+              />
+              <span className="label-text text-primary">Add a new place instead</span>
+            </label>
+          </div>
+        )}
+
+
         {/*--------place Name location and rating */}
         <div className="flex flex-col lg:flex-row justify-between">
           <label className="label flex-col items-start w-full
@@ -370,8 +423,9 @@ const AddReviews = () => {
             
             <input type="text" 
             name="placeName" 
-            defaultValue={draftData?.placeName}
+            defaultValue={ selectedPlaceName || draftData?.placeName }
             required
+            disabled={existingShops.length > 0 && useExistingShop}
             placeholder={`E.g. Al-Noor Halal ${displayTypeCapital}`} 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
             placeholder:text-gray-500"/>
@@ -385,8 +439,9 @@ const AddReviews = () => {
             
             <input type="text" 
             name="placeSpecificLocation" 
-            defaultValue={draftData?.placeSpecificLocation}
+            defaultValue={selectedPlaceSpecificLocation || draftData?.placeSpecificLocation}
             required
+            disabled={existingShops.length > 0 && useExistingShop}
             placeholder="E.g. 103 Prince Street, New York, NY 10012" 
             className="input input-bordered border-2 border-primary rounded lg:w-xs text-base-content
             placeholder:text-gray-500"/>
