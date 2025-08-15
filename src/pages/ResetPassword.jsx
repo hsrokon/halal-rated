@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import Context from "../providers/Context";
+import useAuth from "../hooks/useAuth";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const { resetPassword } = Context();
+  const { resetPassword } = useAuth();
 
   const handleReset = async (e) => {
     e.preventDefault();

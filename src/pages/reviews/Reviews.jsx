@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import ReviewCard from "./ReviewCard";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const Reviews = () => {
 
     const [ reviews, setReviews ] = useState([]);
+    const axiosSecure = useAxiosSecure()
 
     useEffect(()=> {
-        fetch('http://localhost:5000/reviews')
-        .then(res => res.json())
-        .then(data => setReviews(data))
+        axiosSecure.get('/reviews')
+        .then(res => setReviews(res.data))
     },[])
 
     return (

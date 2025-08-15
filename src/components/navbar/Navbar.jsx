@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom'; 
 import { TbLogout } from 'react-icons/tb';
 import { AnimatePresence, motion } from "framer-motion";
-import Context from '../../providers/Context';
+import useAuth from '../../hooks/useAuth';
 
 
 const Navbar = () => {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, logOutUser } = Context()
+  const { user, logOutUser } = useAuth()
 
   // user drop down and focusring handle 
   const dropdownRef = useRef(null);

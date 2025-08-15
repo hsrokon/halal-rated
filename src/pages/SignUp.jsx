@@ -4,11 +4,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { sendEmailVerification } from "firebase/auth";
-import Context from "../providers/Context";
+import useAuth from "../hooks/useAuth";
 
 
 const SignUp = () => {
-    const { createNewUser, updateUserProfile, logOutUser } = Context()
+    const { createNewUser, updateUserProfile, logOutUser } = useAuth()
     const passState = useInputState();
     const navigate = useNavigate();
 
