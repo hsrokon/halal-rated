@@ -6,6 +6,8 @@ import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Reviews from "../pages/reviews/Reviews";
 import AddReviews from "../pages/addReviews/AddReviews";
+import Restaurants from "../pages/Restaurants";
+import ShopWishlist from "../pages/ShopWishlist";
 
 
 const router = createBrowserRouter([
@@ -22,12 +24,24 @@ const router = createBrowserRouter([
                 element: <Shops></Shops>
             },
             {
+                path: '/restaurants',
+                element: <Restaurants></Restaurants>
+            },
+            {
                 path: '/reviews',
                 element: <Reviews></Reviews>
             },
             {
                 path: '/addReviews',
                 element: <AddReviews></AddReviews>
+            },
+            {
+                path: '/shopWishlist',
+                element: <ShopWishlist></ShopWishlist>
+            },
+            {
+                path: '/about',
+                element: <ShopWishlist></ShopWishlist>
             }
         ]
     },
