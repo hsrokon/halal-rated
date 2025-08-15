@@ -2,69 +2,79 @@ import { useState } from "react";
 import { IoMailOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-  
-const Footer = () => { 
-    const [subscriberEmail, setSubscriberEmail] = useState("");
-    const [subscribing, setSubscribing] = useState(false);
 
-    const handleSubscribe = async (e) => {
-      e.preventDefault();
-      setSubscribing(true);
+const Footer = () => {
+  const [subscriberEmail, setSubscriberEmail] = useState("");
+  const [subscribing, setSubscribing] = useState(false);
 
-      try {
-        const res = await fetch("https://brand-boostie-server.vercel.app/subscribers", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: subscriberEmail }),
-        });
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setSubscribing(true);
 
-        if (!res.ok) throw new Error("Subscription failed");
+    try {
+      const res = await fetch("https://brand-boostie-server.vercel.app/subscribers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: subscriberEmail }),
+      });
 
-        Swal.fire({
-          icon: "success",
-          title: "🎉 Subscribed!",
-          text: "You have successfully subscribed to our updates.",
-          confirmButtonColor: "#3085d6",
-        });
+      if (!res.ok) throw new Error("Subscription failed");
 
-        setSubscriberEmail("");
-      } catch (err) {
-        console.error(err);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Failed to subscribe. Please try again later.",
-          confirmButtonColor: "#d33",
-        });
-      } finally {
-        setSubscribing(false);
-      }
-    };
+      Swal.fire({
+        icon: "success",
+        title: "🎉 Subscribed!",
+        text: "You’ll now get the latest halal shop & restaurant updates.",
+        confirmButtonColor: "#3085d6",
+      });
 
-
+      setSubscriberEmail("");
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to subscribe. Please try again later.",
+        confirmButtonColor: "#d33",
+      });
+    } finally {
+      setSubscribing(false);
+    }
+  };
 
   return (
     <footer className="bg-base-300 text-gray-700 pt-16 pb-8 px-6 font-poppins">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+        
         {/* Brand Info */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src="https://i.ibb.co/PHnxxqt/b-cropped.webp" alt="Logo" className="w-6 h-6" />
-            <span className="text-xl text-primary font-semibold"></span>
+            <img
+              src="https://i.ibb.co/tp2thjR1/tr-ffl.png" 
+              alt="Logo"
+              className="w-32"
+            />
+            {/* <span className="text-xl text-primary font-semibold">Halal Rated</span> */}
           </div>
           <p className="text-sm text-gray-600 mb-6">
-           
+            Helping you discover and review halal shops & restaurants worldwide.
           </p>
           <div className="flex gap-4">
-            {["facebook", "twitter", "youtube", "linkedin"].map((platform) => (
+            {[
+              { name: "facebook", url: "https://facebook.com" },
+              { name: "twitter", url: "https://twitter.com" },
+              { name: "youtube", url: "https://youtube.com" },
+              { name: "linkedin", url: "https://linkedin.com" },
+            ].map((platform) => (
               <a
-                key={platform}
-                href="#"
+                key={platform.name}
+                href={platform.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white shadow flex items-center justify-center hover:bg-gray-100 transition"
               >
                 <img
-                  src={`https://cdn.jsdelivr.net/npm/simple-icons/icons/${platform}.svg`}
-                  alt={platform}
+                  src={`https://cdn.jsdelivr.net/npm/simple-icons/icons/${platform.name}.svg`}
+                  alt={platform.name}
                   className="w-4 h-4 opacity-70"
                 />
               </a>
@@ -75,32 +85,35 @@ const Footer = () => {
         {/* Useful Links */}
         <div className="grid grid-cols-2 gap-8 text-sm">
           <div>
-            <h4 className="font-semibold mb-3">Company</h4>
+            <h4 className="font-semibold mb-3">Explore</h4>
             <div className="flex flex-col gap-1.5 text-gray-600">
-              <Link to={'/about'}>About Us</Link>
-              <Link to={'/caseStudies'}>Case Studies</Link>
-              <Link>Careers</Link>
-              <Link to={'/blogs'}>Blog</Link>
+              <Link to={"/shops"}>Shops</Link>
+              <Link to={"/restaurants"}>Restaurants</Link>
+              <Link to={"/add-review"}>Add Review</Link>
+              <Link to={"/blogs"}>Shop Wishlist</Link>
             </div>
           </div>
           <div>
             <h4 className="font-semibold mb-3">Support</h4>
             <div className="flex flex-col gap-1.5 text-gray-600">
-              <Link to={'/contact'}>Contact</Link>
-              <Link to={'/about'}>FAQs</Link>
-              <Link>Privacy Policy</Link>
-              <Link>Terms & Conditions</Link>
+              <Link to={"/contact"}>Contact</Link>
+              <Link to={"/faqs"}>FAQs</Link>
+              <Link to={"/privacy"}>Privacy Policy</Link>
+              <Link to={"/terms"}>Terms & Conditions</Link>
             </div>
           </div>
         </div>
 
-        {/* Newsletter   */}
+        {/* Newsletter */}
         <div>
-          <h4 className="font-semibold text-sm mb-3">Subscribe to Updates</h4>
+          <h4 className="font-semibold text-sm mb-3">Subscribe for Halal Updates</h4>
           <p className="text-sm text-gray-600 mb-4">
-            Get the latest digital marketing insights, growth tips, and exclusive offers straight to your inbox.
+            Get the latest halal dining news, shop recommendations, and exclusive offers straight to your inbox.
           </p>
-          <form onSubmit={handleSubscribe} className="flex rounded-md overflow-hidden bg-white border border-primary">
+          <form
+            onSubmit={handleSubscribe}
+            className="flex rounded-md overflow-hidden bg-white border border-primary"
+          >
             <input
               type="email"
               placeholder="Enter your email"
@@ -125,38 +138,14 @@ const Footer = () => {
       <div className="mt-12 pt-6 max-w-7xl mx-auto border-t text-sm flex flex-col md:flex-row justify-between items-center gap-4">
         <ul className="flex flex-wrap gap-6 text-gray-500 justify-center">
           <Link to={"/"}>Home</Link>
-          <Link to={"/services"}>Services</Link>
-          <Link to={"/pricing"}>Pricing</Link>
-          <Link to={"/caseStudies"}>Case Studies</Link>
+          <Link to={"/shops"}>Shops</Link>
+          <Link to={"/restaurants"}>Restaurants</Link>
+          <Link to={"/reviews"}>Reviews</Link>
+          <Link to={"/addReview"}>Add Reviews</Link>
+          <Link to={"/shopWishlist"}>Shop Wishlist</Link>
           <Link to={"/about"}>About</Link>
-          <Link to={"/blogs"}>Blogs</Link>
-          <Link to={"/contact"}>Contact</Link>
-          <Link to={"/admin/dashboard"}>Admin</Link>
-          <a href="https://github.com/hsrokon" target="_blank" rel="noopener noreferrer">Developer</a>
         </ul>
-        <div className="flex gap-4">
-            <div className="w-14 h-6">     
-                <img
-                    src={'https://i.ibb.co/rGHzqh5y/BKash.png'}
-                    alt={'Bkash'}
-                    className="w-full h-full object-cover"
-                    />
-            </div>
-            <div className="w-14 h-6">
-                <img
-                src={'https://i.ibb.co/zVxYkhn7/Nagad.png'}
-                alt={'Nagad'}
-                className="w-full h-full object-cover"
-                />
-            </div>
-            <div className="w-14 h-6">
-                <img
-                src={'https://i.ibb.co/YFWybDMg/Rocket.png'}
-                alt={'Nagad'}
-                className="w-full h-full object-cover"
-                />
-            </div>
-        </div>
+        <p className="text-gray-500">© {new Date().getFullYear()} Halal Rated. All rights reserved.</p>
       </div>
     </footer>
   );
