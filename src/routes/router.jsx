@@ -8,6 +8,7 @@ import Reviews from "../pages/reviews/Reviews";
 import AddReviews from "../pages/addReviews/AddReviews";
 import Restaurants from "../pages/Restaurants";
 import ShopWishlist from "../pages/ShopWishlist";
+import ResetPassword from "../pages/ResetPassword";
 
 
 const router = createBrowserRouter([
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
     {
         path: '/auth/login',
         element: <Login></Login>
+    },
+    {
+        path: '/auth/resetPassword',
+        element: <ResetPassword></ResetPassword>
     }
 ])
 

@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../providers/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
+import Context from "../../providers/Context";
 
 
 const AddReviews = () => {
@@ -153,7 +153,7 @@ const AddReviews = () => {
   };
 
 
-  const { user } = useContext(AuthContext);
+  const { user } = Context();
   const location = useLocation();
   const navigate = useNavigate();
   const [ rating, setRating ] = useState(0);

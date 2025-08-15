@@ -1,64 +1,60 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import useInputState from "../utils/controlledFormHook";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../providers/AuthProvider";
+import Swal from "sweetalert2";
+import { sendEmailVerification } from "firebase/auth";
+import Context from "../providers/Context";
 
 
 const SignUp = () => {
-    const { createNewUser, updateUserProfile, setUser } = useContext(AuthContext);
+    const { createNewUser, updateUserProfile, logOutUser } = Context()
     const passState = useInputState();
     const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        //Object.values() give the values of an object you just need to point out which object in this '()' | 
-        // Object.values(passState.validation) --in console=> [false, true, false, false, false]
         const isPasswordValid = Object.values(passState.validation).every(Boolean)
-        //.every(...) is a JavaScript array method that checks:"Does every item in the array meet this condition?" If any item fails the test, it returns false.
         
         if (!isPasswordValid) {
             alert('Please meet all password requirements before submitting.');
             return;
         }
 
-        const displayName = e.target.name.value;
-        const photoURL = e.target.photo.value;
         const email = e.target.email.value;
         const password = passState.value;
-
+        const displayName = e.target.name.value;
+        const photoURL = e.target.photo.value;
         createNewUser(email, password)
         .then(credential =>{
             const user = credential.user;
-            setUser(user)
-            console.log(user);
-            const firstSignedUp = user.metadata.createdAt;;
-            const lastLoggedIn = user.metadata.lastLoginAt;
             
-            const userInfo = { email, displayName, photoURL, firstSignedUp, lastLoggedIn};
-            fetch('http://localhost:5000/users', {
-                method : 'POST',
-                headers: {
-                    'content-type' : 'application/json'
-                },
-                body: JSON.stringify(userInfo)
-            })
-            .then(res => res.json())
-            .then()
-
             updateUserProfile(displayName, photoURL)
             .then()
             .catch(error => {
                 console.log('Profile update error', error);
             })
-            navigate('/')
+
+            sendEmailVerification(user)
+            .then(()=>{
+                Swal.fire({
+                    title: 'Verification Email Sent!',
+                    text: 'Check your inbox and click the link to verify.',
+                    icon: 'success',
+                    customClass: {
+                        title: 'swal-title',
+                        htmlContainer: 'swal-text'
+                    }
+                })
+                logOutUser(); 
+                navigate('/auth/login');
+            })
         })
         .catch(error => {
             const errorMessage = error.message;
             console.log(errorMessage);
         })
-        
     }
 
     const [ showPass, setShowPass ] = useState(false)
@@ -86,7 +82,7 @@ const SignUp = () => {
                         type="text" 
                         name="photo"
                         className="input rounded text-base-content w-full" 
-                        placeholder="Profile photo URL" />
+                        placeholder="Profile photo URL (optional)" />
 
                         <label className="text-sm">Email</label>
                         <input 
