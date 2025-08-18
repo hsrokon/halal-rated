@@ -85,12 +85,13 @@ const AddReviews = () => {
   //getting existing shop
   const [ existingShops, setExistingShops ] = useState([]);
   const [ useExistingShop, setUseExistingShop ] = useState(true);
+  const [ selectedPlaceId, setSelectedPlaceId ] = useState('');
   const [ selectedPlaceName, setSelectedPlaceName ] = useState('');
   const [ selectedPlaceSpecificLocation, setSelectedPlaceSpecificLocation ] = useState('');
 
   useEffect(()=>{
     if (region && country && city) {
-      fetch(`http://localhost:5000/shops?region=${region}&country=${country}&city=${city}`)
+      fetch(`http://localhost:5000/places?region=${region}&country=${country}&city=${city}`)
       .then(res => res.json())
       .then(data => setExistingShops(data))
     }
@@ -212,6 +213,7 @@ const AddReviews = () => {
       city,
       placeName,
       placeSpecificLocation,
+      selectedPlaceId,
       rating,
       placeType,
       reviewArea,
@@ -235,33 +237,33 @@ const AddReviews = () => {
       if (result.isConfirmed) {
         console.log(userReviewData);
 
-        // //for server fetch
-        // fetch('http://localhost:5000/addReviews', {
-        //   method: 'POST',
-        //   headers: {'content-type': 'application/json'},
-        //   body: JSON.stringify(userReviewData)
-        // })
-        // .then(res => res.json())
-        // .then(data => {
-        //   console.log(data);
-        //   if (data.insertedId) {
-        //     Swal.fire({
-        //     title: "Posted!",
-        //     text: "Your file has been posted.",
-        //     icon: "success"
-        //   });
+        //for server fetch
+        fetch('http://localhost:5000/places', {
+          method: 'POST',
+          headers: {'content-type': 'application/json'},
+          body: JSON.stringify(userReviewData)
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.insertedId) {
+            Swal.fire({
+            title: "Posted!",
+            text: "Your review has been posted.",
+            icon: "success"
+          });
 
-        //   //resetting
-        //   sessionStorage.removeItem('pendingReview');
-        //   form.reset();
-        //   resetFormState();
-        //   form.placeName.value = '';
-        //   form.placeSpecificLocation.value = '';
-        //   form.reviewArea.value = '';
-        //   form.photoURL.value = '';
-        //   navigate('/');
-        //   }
-        // })
+          //resetting
+          sessionStorage.removeItem('pendingReview');
+          form.reset();
+          resetFormState();
+          form.placeName.value = '';
+          form.placeSpecificLocation.value = '';
+          form.reviewArea.value = '';
+          form.photoURL.value = '';
+          navigate('/');
+          }
+        })
       }
     });
   };
@@ -387,6 +389,7 @@ const AddReviews = () => {
                 const selected = existingShops.find(
                   s => `${s.placeName} - ${s.placeSpecificLocation}` === e.target.value
                 );
+                setSelectedPlaceId(selected?._id || "");
                 setSelectedPlaceName(selected?.placeName || "");
                 setSelectedPlaceSpecificLocation(selected?.placeSpecificLocation || "");
               }}
@@ -404,8 +407,8 @@ const AddReviews = () => {
               <input
                 type="checkbox"
                 checked={!useExistingShop}
-                onChange={() => setUseExistingShop(!useExistingShop)}
-                className="checkbox checkbox-success mr-2"
+                onChange={(e) => setUseExistingShop(!useExistingShop)}
+                className="checkbox checkbox-success border-2 mr-2"
               />
               <span className="label-text text-primary">Add a new place instead</span>
             </label>
