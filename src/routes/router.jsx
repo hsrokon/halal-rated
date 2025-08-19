@@ -5,11 +5,11 @@ import Home from "../pages/Home";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import Reviews from "../pages/reviews/Reviews";
-import AddReviews from "../pages/addReviews/AddReviews";
 import Restaurants from "../pages/Restaurants";
 import ResetPassword from "../pages/ResetPassword";
 import ViewAll from "../pages/ViewAll";
 import About from "../pages/About";
+import AddReviews from "../pages/AddReviews";
 
 
 const router = createBrowserRouter([

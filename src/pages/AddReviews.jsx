@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const AddReviews = () => {
@@ -216,7 +216,6 @@ const AddReviews = () => {
       city,
       placeName,
       placeSpecificLocation,
-      selectedPlaceId,
       placeType,
       halalCertified,
       selectedTags,
@@ -225,6 +224,7 @@ const AddReviews = () => {
     }
 
     const reviewData = {
+      placeId : selectedPlaceId,//ref to place
       rating,
       reviewArea,
       honestyConsent,
@@ -247,12 +247,16 @@ const AddReviews = () => {
         // console.log(userReviewData);
 
         //for server fetch
-        axiosSecure.post('/places', placeData)
+        axiosSecure.post(`/places?selectedPlaceId=${selectedPlaceId}`, placeData)
+        //--place post
         .then(res => {
-          // console.log(res.data);
-          if (res.data.modifiedCount) {
-            
-            axiosSecure.post('/addReviews', reviewData)
+
+          if (res.data.insertedId) {
+            reviewData.placeId = res.data.insertedId;
+          }
+
+          if (res.data.insertedId || res.data.modifiedCount > 0) { 
+            axiosSecure.post('/addReviews', reviewData)//--review post
             .then(res => {
               if (res.data.insertedId) {
                 Swal.fire({
