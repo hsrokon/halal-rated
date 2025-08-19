@@ -3,6 +3,7 @@ import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const AddReviews = () => {
@@ -163,6 +164,8 @@ const AddReviews = () => {
   const [ userDisplay, setUserDisplay ] = useState(false);
   const [ selectedTags, setSelectedTags ] = useState([]);
 
+  const axiosSecure = useAxiosSecure();
+
   // Form Submit
   const handleSubmit = e => {
     e.preventDefault();
@@ -207,20 +210,26 @@ const AddReviews = () => {
     const photoURL = form.photoURL.value;
     const userEmail = user.email;
 
-    const userReviewData = {
+    const placeData = {
       region,
       country,
       city,
       placeName,
       placeSpecificLocation,
       selectedPlaceId,
-      rating,
       placeType,
-      reviewArea,
       halalCertified,
       selectedTags,
       photoURL,
+      enlisterEmail : userEmail,
+    }
+
+    const reviewData = {
+      rating,
+      reviewArea,
       honestyConsent,
+      photoURL,
+      selectedTags,
       userDisplay,
       userEmail,
     }
@@ -235,33 +244,34 @@ const AddReviews = () => {
       confirmButtonText: "Yes, post it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(userReviewData);
+        // console.log(userReviewData);
 
         //for server fetch
-        fetch('http://localhost:5000/places', {
-          method: 'POST',
-          headers: {'content-type': 'application/json'},
-          body: JSON.stringify(userReviewData)
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          if (data.insertedId) {
-            Swal.fire({
-            title: "Posted!",
-            text: "Your review has been posted.",
-            icon: "success"
-          });
+        axiosSecure.post('/places', placeData)
+        .then(res => {
+          // console.log(res.data);
+          if (res.data.modifiedCount) {
+            
+            axiosSecure.post('/addReviews', reviewData)
+            .then(res => {
+              if (res.data.insertedId) {
+                Swal.fire({
+                title: "Posted!",
+                text: "Your review has been posted.",
+                icon: "success"
+                });
 
-          //resetting
-          sessionStorage.removeItem('pendingReview');
-          form.reset();
-          resetFormState();
-          form.placeName.value = '';
-          form.placeSpecificLocation.value = '';
-          form.reviewArea.value = '';
-          form.photoURL.value = '';
-          navigate('/');
+                //resetting
+                sessionStorage.removeItem('pendingReview');
+                form.reset();
+                resetFormState();
+                form.placeName.value = '';
+                form.placeSpecificLocation.value = '';
+                form.reviewArea.value = '';
+                form.photoURL.value = '';
+                navigate('/');
+              }
+            })
           }
         })
       }
