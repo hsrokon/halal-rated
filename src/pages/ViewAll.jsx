@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ShopWishlist = () => {
+const ViewAll = () => {
     return (
         <div className='min-h-screen'>
             
@@ -8,4 +8,4 @@ const ShopWishlist = () => {
     );
 };
 
-export default ShopWishlist;
+export default ViewAll;

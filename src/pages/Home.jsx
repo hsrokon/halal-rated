@@ -1,4 +1,4 @@
-import Banner from '../components/banner/Banner';
+import Banner from '../components/Banner';
 import Popular from '../components/main-middle/Popular';
 import Rated from '../components/main-middle/Rated';
 

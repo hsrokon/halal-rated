@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom'; 
 import { TbLogout } from 'react-icons/tb';
 import { AnimatePresence, motion } from "framer-motion";
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
 
 const Navbar = () => {
@@ -151,7 +151,7 @@ const Navbar = () => {
                 id="navbar-user"
               >
                 <ul className="flex flex-col font-medium p-4 border border-gray-100 rounded-lg bg-gray-50 text-sm">
-                  {["/", "/shops", "/restaurants", "/reviews", "/addReviews", "/shopWishlist", "/about"].map(nav => (
+                  {["/", "/shops", "/restaurants", "/viewAll", "/reviews", "/addReviews", "/about"].map(nav => (
                     <motion.div
                       className="relative group"
                       initial="rest"
@@ -192,7 +192,7 @@ const Navbar = () => {
           {/* 👇 For Desktop - Always Visible */}
           <div className="hidden md:flex md:items-center md:order-1" id="navbar-user">
             <ul className="flex font-medium space-x-1 text-xs lg:text-base lg:space-x-4 xl:space-x-7">
-              {["/", "/shops", "/restaurants", "/reviews", "/addReviews", "/shopWishlist", "/about"].map(nav => (
+              {["/", "/shops", "/restaurants", "/viewAll", "/reviews", "/addReviews", "/about"].map(nav => (
                 <motion.div
                   className="relative group"
                   initial="rest"

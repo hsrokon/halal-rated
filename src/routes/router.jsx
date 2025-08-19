@@ -7,8 +7,9 @@ import Login from "../pages/Login";
 import Reviews from "../pages/reviews/Reviews";
 import AddReviews from "../pages/addReviews/AddReviews";
 import Restaurants from "../pages/Restaurants";
-import ShopWishlist from "../pages/ShopWishlist";
 import ResetPassword from "../pages/ResetPassword";
+import ViewAll from "../pages/ViewAll";
+import About from "../pages/About";
 
 
 const router = createBrowserRouter([
@@ -37,12 +38,12 @@ const router = createBrowserRouter([
                 element: <AddReviews></AddReviews>
             },
             {
-                path: '/shopWishlist',
-                element: <ShopWishlist></ShopWishlist>
+                path: '/viewAll',
+                element: <ViewAll></ViewAll>
             },
             {
                 path: '/about',
-                element: <ShopWishlist></ShopWishlist>
+                element: <About></About>
             }
         ]
     },
