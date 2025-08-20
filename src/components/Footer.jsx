@@ -118,7 +118,7 @@ const Footer = () => {
               type="email"
               placeholder="Enter your email"
               value={subscriberEmail}
-              onChange={(e) => setSubscriberEmail(e.target.value)}
+              onChange={e => setSubscriberEmail(e.target.value)}
               required
               className="px-4 py-2 w-full text-sm focus:outline-none"
             />
@@ -128,7 +128,7 @@ const Footer = () => {
               className="px-4 text-sm lg:text-base text-primary hover:text-accent transition flex items-center gap-1.5 cursor-pointer"
               title="Subscribe"
             >
-              {subscribing ? "Subscribing..." : <><Mail /> Subscribe</>}
+              {subscribing ? "Subscribing..." : <><Mail className="w-4 h-4" /> Subscribe</>}
             </button>
           </form>
         </div>
