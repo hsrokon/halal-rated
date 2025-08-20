@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useInputState from "../utils/controlledFormHook";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { sendEmailVerification } from "firebase/auth";
@@ -106,7 +105,8 @@ const SignUp = () => {
                             onClick={()=> setShowPass(!showPass)}
                             className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 text-base-content text-lg z-20">
                                 {
-                                    showPass ? <FaEyeSlash /> : <FaEye/>
+                                    showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />
+
                                 }</button>
                         </div>
                         

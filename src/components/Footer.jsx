@@ -1,5 +1,5 @@
+import { Mail } from "lucide-react";
 import { useState } from "react";
-import { IoMailOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -128,7 +128,7 @@ const Footer = () => {
               className="px-4 text-sm lg:text-base text-primary hover:text-accent transition flex items-center gap-1.5 cursor-pointer"
               title="Subscribe"
             >
-              {subscribing ? "Subscribing..." : <><IoMailOutline /> Subscribe</>}
+              {subscribing ? "Subscribing..." : <><Mail /> Subscribe</>}
             </button>
           </form>
         </div>

@@ -1,5 +1,5 @@
-import { MdArrowOutward } from 'react-icons/md';
 import { useEffect, useState } from 'react';
+import { MoveUpRight } from 'lucide-react';
 
 const ReviewCard = ({ review }) => {
   const {
@@ -68,7 +68,7 @@ const ReviewCard = ({ review }) => {
         <div className="flex gap-2">
           <button className="mt-2 bg-[hsl(158,36%,37%)] hover:bg-[hsl(158,36%,27%)] text-white font-medium text-sm md:text-base py-2.5 px-3 rounded-lg flex items-center justify-center transition-colors duration-300 cursor-pointer">
             <span className="mr-2">Visit {placeType}</span>
-            <MdArrowOutward size="1.25rem" />
+            <MoveUpRight />
           </button>
         </div>
       </div>

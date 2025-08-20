@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom'; 
-import { TbLogout } from 'react-icons/tb';
 import { AnimatePresence, motion } from "framer-motion";
 import useAuth from '../hooks/useAuth';
+import { LogOut } from 'lucide-react';
 
 
 const Navbar = () => {
@@ -115,7 +115,7 @@ const Navbar = () => {
                     onClick={handleLogOut}
                     className="flex items-center gap-2 px-4 py-3 text-red-600 cursor-pointer hover:bg-red-50 transition-colors duration-150"
                   >
-                    <TbLogout className="text-lg" /> Sign out
+                    <LogOut /> Sign out
                   </li>
                 </ul>
               </motion.div>

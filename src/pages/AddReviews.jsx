@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { IoIosLink } from "react-icons/io";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Link } from "lucide-react";
 
 
 const AddReviews = () => {
@@ -564,7 +564,7 @@ const AddReviews = () => {
                   <span className="label-text text-primary">&#10095; Upload Photo Link <span className="font-semibold italic text-xs lg:text-sm">(Highly recommended)</span></span>
           </label>
           <label className="input validator border-2 border-primary rounded">
-            <IoIosLink className="text-xl" />
+            <Link />
             <input
               type="url"
               required
