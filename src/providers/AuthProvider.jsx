@@ -7,20 +7,24 @@ import { AuthContext } from "../hooks/useAuth";
 const AuthProvider = ({children}) => {
     const provider = new GoogleAuthProvider();
     const [ user, setUser ] = useState(null);
+    const [ loading, setLoading ] = useState(true);
     // console.log(user);
 
     useEffect(()=> {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            setLoading(false);
         })
         return ()=> unSubscribe();
     },[])
 
     const createNewUser = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const updateUserProfile = (displayName, photoURL)=> {
+        setLoading(true);
         return updateProfile(auth.currentUser, {
             displayName,
             photoURL
@@ -28,10 +32,12 @@ const AuthProvider = ({children}) => {
     }
 
     const loginUser = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     }
 
     const logInWithGoogle = () => {
+        setLoading(true);
         return signInWithPopup(auth, provider);
     }
 
@@ -41,6 +47,8 @@ const AuthProvider = ({children}) => {
 
     const userInfo = {
         user,
+        loading,
+        setLoading,
         setUser,
         createNewUser,
         updateUserProfile,

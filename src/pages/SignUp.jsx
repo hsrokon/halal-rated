@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { sendEmailVerification } from "firebase/auth";
 import useAuth from "../hooks/useAuth";
+import { Eye, EyeOff } from "lucide-react";
 
 
 const SignUp = () => {

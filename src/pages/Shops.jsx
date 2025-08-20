@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import ShopCard from "../components/shops/ShopCard";
+import { Link } from "react-router-dom";
 
 
 const Shops = () => {
@@ -13,20 +14,23 @@ const Shops = () => {
         .then(res => setShops(res.data))
     },[])
 
-    console.log(shops);
-    
-
     return (
-        <div className="min-h-screen">
-            <h1>total shops {shops.length}</h1>
+        <div className="min-h-screen w-11/12 mx-auto">
+            <h1 className="text-center my-4 text-3xl font-semibold">Discover Halal Shops.
+                <small className="text-sm pb-1 italic font-light"> ({shops.length} results)</small>
+            </h1>
 
-            <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {
                     shops.map(shop => 
-                    <ShopCard 
-                    key={shop._id}
-                    shop={shop}
-                    />)
+                        <Link 
+                        key={shop._id}
+                        to={shop._id}>
+                            <ShopCard 
+                            shop={shop}
+                            />
+                        </Link>
+                    )
                 }
             </div>
         </div>

@@ -10,7 +10,7 @@ import ResetPassword from "../pages/ResetPassword";
 import ViewAll from "../pages/ViewAll";
 import About from "../pages/About";
 import AddReviews from "../pages/AddReviews";
-
+import ShopDetails from "../components/shops/ShopDetails";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: '/shops',
                 element: <Shops></Shops>
+            },
+            {
+                path: '/shops/:id',
+                element: <ShopDetails></ShopDetails>,
             },
             {
                 path: '/restaurants',

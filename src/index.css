@@ -10,9 +10,8 @@
   default: true; /* Set as default theme */
   color-scheme: light; /* Define color scheme */
 
-  --color-primary: #006939;     /* Deep green (primary action color) */
-  --color-secondary: #81C784;   /* Soft green (secondary or lighter highlight) */
-  --color-accent: #FFC845;      /* Bright warm yellow (for CTAs, highlights) */
+  --color-primary: #006939;     /* Deep green (primary action color) */--color-secondary: #4CAF50; /* medium green, complements dark green */
+  --color-accent: #fc6932;      /* Bright warm yellow (for CTAs, highlights) */
   --color-neutral: #3D4451;     /* Dark gray for headers/nav */
   --color-base-100: #F7F7F7;    /* Light gray background */
   --color-base-300: #E7E6E6;    /* Section background */
@@ -20,19 +19,6 @@
 }
 
 
-.active {
-  color: #006939;
-  border-bottom: 3px solid #006939;
-  /* padding-bottom: 2px; */
-  /* transition: color 0.3s ease, border-bottom 0.2s ease, padding-bottom 0.3s ease; */
-}
-
-/* Optional: Slightly thinner border for large screens */
-/* @media (min-width: 1024px) {
-  .active {
-    border-bottom: 3px solid #006939;
-  }
-} */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
