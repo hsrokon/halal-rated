@@ -19,7 +19,7 @@ const ShopDetails = () => {
     const enlistedDate = new Date(shop.enlistedIn).toLocaleDateString();
     
   return (
-    <div className="w-8/12 mx-auto mb-4">
+    <div className="w-8/12 mx-auto mb-20">
       {/* Image */}
       <div className="">
         <figure>
@@ -29,42 +29,51 @@ const ShopDetails = () => {
             className="w-full h-[33rem] object-cover"
           />
         </figure>
-        <div className="card-body p-6">
+        <div className="">
           {/*name */}
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">{shop.placeName}</h1>
+          <div className="flex items-center justify-between bg-secondary/80 my-6 py-2 pl-4">
+            <h1 className="text-3xl font-bold text-white">{shop.placeName}</h1>
             {shop.halalCertified ? (
               <CheckCircle className="text-success" size={24} title="Halal Certified" />
             ) : ''}
           </div>
 
-          {/* location */}
-          <div className="flex items-center gap-2 text-gray-700">
-            <MapPin size={18} />
-            <span>{shop.placeSpecificLocation}</span>
-            <span className="ml-auto text-sm text-gray-500">{shop.city}, {shop.country}</span>
+          <div className="flex justify-between items-center">
+              {/* location */}
+            <div className="flex items-center gap-2 text-gray-700">
+              <MapPin className="text-primary" size={26} />
+              <div className="flex flex-col ">
+                <span>{shop.placeSpecificLocation}</span>
+                <span className="mr-auto text-accent">{shop.city}, {shop.country}</span>
+              </div>
+            </div>
+
+            {/* shop type */}
+            {/* <p className="text-sm text-gray-500">Type: {shop.placeType}</p> */}
+
+            {/* tags */}
+            <div className="flex flex-wrap gap-2">
+              {shop.selectedTags.map((tag, i) => (
+                <span key={i} className="badge badge-outline flex text-base items-center gap-1">
+                  <Tag className="text-primary" size={20} /> {tag}
+                </span>
+              ))}
           </div>
 
-          {/* shop type */}
-          <p className="text-sm text-gray-500">Type: {shop.placeType}</p>
-
-          {/* tags */}
-          <div className="flex flex-wrap gap-2">
-            {shop.selectedTags.map((tag, i) => (
-              <span key={i} className="badge badge-outline flex items-center gap-1">
-                <Tag size={12} /> {tag}
-              </span>
-            ))}
+          
           </div>
 
           {/* review count and enlisted */}
           <div className="flex justify-between items-center mt-4">
-            <p className="text-gray-700">{shop.reviewCount} {shop.reviewCount === 1 ? "Review" : "Reviews"}</p>
+            <p className="text-sm text-gray-600">Shop Added by: {shop.enlisterEmail}</p>
             <p className="text-sm text-gray-400">Enlisted on: {enlistedDate}</p>
           </div>
+        </div>
 
-          {/* contact */}
-          <p className="text-sm text-gray-600">Added by: {shop.enlisterEmail}</p>
+        {/* reviews */}
+        <div className="my-6">
+          <h4 className="text-2xl text-primary">Reviews:</h4>
+              <p className="text-gray-700">{shop.reviewCount} {shop.reviewCount === 1 ? "Review" : "Reviews"}</p>
         </div>
       </div>
     </div>
