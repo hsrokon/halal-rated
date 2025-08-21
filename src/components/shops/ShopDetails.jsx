@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapPin, CheckCircle, XCircle, Tag } from "lucide-react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
+import ShopDetailsRevCard from "../shopDetails/ShopDetailsRevCard";
 
 const ShopDetails = () => {
     const [ shop, setShop ] = useState(null);
@@ -11,6 +12,7 @@ const ShopDetails = () => {
         axiosSecure.get(`/shops/${id}`)
         .then(res => setShop(res.data))
     },[id])
+    
 
     if (!shop) {
         return <p>Loading........</p>
@@ -65,16 +67,19 @@ const ShopDetails = () => {
 
           {/* review count and enlisted */}
           <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-gray-600">Shop Added by: {shop.enlisterEmail}</p>
-            <p className="text-sm text-gray-400">Enlisted on: {enlistedDate}</p>
+            <p className="text-sm text-base-content hover:underline">Shop Added by : {shop.enlisterEmail}</p>
+            <p className="text-sm text-gray-400 hover:text-base-content hover:underline">Enlisted on: <span> </span> {enlistedDate}</p>
           </div>
         </div>
 
-        {/* reviews */}
-        <div className="my-6">
+        {/* reviews */} 
+        <div className="my-6 flex items-baseline gap-2 divider divider-start before:bg-primary/70 after:bg-primary/70">
           <h4 className="text-2xl text-primary">Reviews:</h4>
-              <p className="text-gray-700">{shop.reviewCount} {shop.reviewCount === 1 ? "Review" : "Reviews"}</p>
+          <p className="font-light text-base-content">({shop.reviewCount} {shop.reviewCount === 1 ? "Review" : "Reviews"})</p>
         </div>
+
+        <ShopDetailsRevCard id={id} />
+
       </div>
     </div>
   );
