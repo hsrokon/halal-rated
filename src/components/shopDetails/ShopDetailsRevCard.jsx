@@ -11,7 +11,16 @@ const ShopDetailsRevCard = ({id}) => {
       .then(res => setReviews(res.data))
     },[])
 
+    const [ reviewerEmail, setReviewerEmail ] = useState(null);
+    const [ reviewUser, setReviewUser ] = useState(null);
 
+    useEffect(()=>{
+        axiosSecure.get(`/users/${reviewerEmail}`)
+        .then(res => setReviewUser(res.data))
+    },[reviewerEmail])
+
+    console.log(reviewUser);
+    
 
     return (
         <div>
@@ -20,7 +29,8 @@ const ShopDetailsRevCard = ({id}) => {
             {reviews.length > 0 ? (
                 reviews.map((review) => (
                 <div
-                    key={review._id.$oid}
+                    key={review._id}
+                    onLoad={()=> setReviewerEmail(review.userEmail)}
                     className="border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition"
                 >
                     {/* Reviewer Info */}
