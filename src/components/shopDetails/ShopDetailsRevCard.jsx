@@ -7,6 +7,7 @@ const ShopDetailsRevCard = ({ id }) => {
   const { loading, setLoading } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [users, setUsers] = useState({});
+  const [ selectedPhoto, setSelectedPhoto ] = useState(null);
 
   //fetching reviews
   useEffect(() => {
@@ -35,24 +36,47 @@ const ShopDetailsRevCard = ({ id }) => {
 
   if (loading) return <p>Loading.......</p>;
 
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      {reviews.length ? (
-        reviews.map(review => (
-          <ReviewCard 
-            key={review._id} 
-            review={review} 
-            user={users[review.userEmail]} 
-          />
-        ))
-      ) : (
-        <p className="text-gray-500 italic">No reviews yet.</p>
-      )}
-    </div>
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {reviews.length ? (
+          reviews.map(review => (
+            <ReviewCard 
+              key={review._id} 
+              review={review} 
+              user={users[review.userEmail]} 
+              onPhotoClick={()=>setSelectedPhoto(review.photoURL)}//sending onPhotoClick as a prop
+            />
+          ))
+        ) : (
+          <p className="text-gray-500 italic">No reviews yet.</p>
+        )}
+      </div>
+
+        {/* wide screen modal */}
+        {
+          selectedPhoto && (
+            <div 
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50"
+            onClick={()=> setSelectedPhoto(null)}
+            >
+              <img 
+              src={selectedPhoto} 
+              alt="Preview" 
+              className="max-w-5xl max-h-[90vh] object-contain rounded-lg shadow-2xl border-4 border-white"
+              onClick={ e => e.stopPropagation()} // preventing image closure on click
+              />
+            </div>
+          )
+        }
+
+    </>
   );
 };
 
-const ReviewCard = ({ review, user }) => {
+const ReviewCard = ({ review, user, onPhotoClick }) => {
+  //receiving onPhotoClick as a prop
   const { displayName, photoURL } = user || {};
   return (
     <div className="border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition">
@@ -71,7 +95,9 @@ const ReviewCard = ({ review, user }) => {
         </div>
       </div>
 
-      <div className="cursor-pointer h-40 w-72 ">
+      <div className="cursor-pointer h-40 w-72" 
+      onClick={onPhotoClick}//setting photo url 
+      >
         <img className="h-full w-full object-cover" src={review.photoURL} alt="" />
       </div>
 
