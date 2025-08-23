@@ -61,18 +61,18 @@ const ReviewCard = ({ review, user }) => {
         <img
           src={photoURL}
           alt={displayName || review.userEmail}
-          className="w-12 h-12 rounded-full object-cover border"
+          className="w-12 h-12 rounded-full object-cover border cursor-pointer"
         />
         <div>
-          <p className="font-semibold">{displayName || review.userEmail}</p>
+          <p className="font-semibold cursor-pointer">{displayName || review.userEmail}</p>
           <p className="text-xs text-gray-500">
             {new Date(review.createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>
 
-      <div>
-        <img src={review.photoURL} alt="" />
+      <div className="cursor-pointer h-40 w-72 ">
+        <img className="h-full w-full object-cover" src={review.photoURL} alt="" />
       </div>
 
       {/* rating */}
