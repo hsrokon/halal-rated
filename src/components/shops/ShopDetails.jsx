@@ -14,10 +14,19 @@ const ShopDetails = () => {
     },[id])
     
 
+    const [ user, setUser ] = useState(null)
+    useEffect(()=>{
+      if (shop?.enlisterEmail) {
+        axiosSecure.get(`/users/${shop.enlisterEmail}`)
+        .then(res => setUser(res.data))
+      }
+    },[shop])
+     
     if (!shop) {
-        return <p>Loading........</p>
+      return <p>Loading........</p>
     }
-
+    
+    
     const enlistedDate = new Date(shop.enlistedIn).toLocaleDateString();
     
   return (
@@ -67,7 +76,9 @@ const ShopDetails = () => {
 
           {/* review count and enlisted */}
           <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-base-content hover:underline">Shop Added by : {shop.enlisterEmail}</p>
+            <p className="text-sm text-base-content hover:underline">
+              <span className="font-semibold">Shop Added by : </span> 
+              {user && user.displayName}</p>
             <p className="text-sm text-gray-400 hover:text-base-content hover:underline">Enlisted on: <span> </span> {enlistedDate}</p>
           </div>
         </div>
