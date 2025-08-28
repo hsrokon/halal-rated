@@ -39,7 +39,7 @@ const ShopDetailsRevCard = ({ id }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0.5 md:gap-2 lg:gap-4">
         {reviews.length ? (
           reviews.map(review => (
             <ReviewCard 
@@ -79,7 +79,7 @@ const ReviewCard = ({ review, user, onPhotoClick }) => {
   //receiving onPhotoClick as a prop
   const { displayName, photoURL } = user || {};
   return (
-    <div className="border max-h-60 border-gray-200 rounded-xl p-2 shadow-sm hover:shadow-md transition">
+    <div className="border-b md:border max-h-60 border-gray-200 rounded-xl p-2 md:shadow-sm hover:shadow-md transition">
       {/* user info */}
       <div className="flex items-center gap-2 mb-2">
         <img
@@ -95,7 +95,7 @@ const ReviewCard = ({ review, user, onPhotoClick }) => {
         </div>
       </div>
 
-      <div className="cursor-pointer h-20 w-32" 
+      <div className="cursor-pointer h-20 w-40 lg:w-32" 
       onClick={onPhotoClick}//setting photo url 
       >
         <img className="h-full w-full object-cover" src={review.photoURL} alt="" />
