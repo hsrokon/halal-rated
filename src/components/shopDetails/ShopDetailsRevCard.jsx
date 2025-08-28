@@ -39,7 +39,7 @@ const ShopDetailsRevCard = ({ id }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {reviews.length ? (
           reviews.map(review => (
             <ReviewCard 
@@ -79,23 +79,23 @@ const ReviewCard = ({ review, user, onPhotoClick }) => {
   //receiving onPhotoClick as a prop
   const { displayName, photoURL } = user || {};
   return (
-    <div className="border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition">
+    <div className="border max-h-60 border-gray-200 rounded-xl p-2 shadow-sm hover:shadow-md transition">
       {/* user info */}
-      <div className="flex items-center gap-4 mb-3">
+      <div className="flex items-center gap-2 mb-2">
         <img
           src={photoURL}
           alt={displayName || review.userEmail}
-          className="w-12 h-12 rounded-full object-cover border cursor-pointer"
+          className="w-8 h-8 rounded-full object-cover border cursor-pointer"
         />
         <div>
-          <p className="font-semibold cursor-pointer">{displayName || review.userEmail}</p>
+          <p className="font-semibold text-sm cursor-pointer">{displayName || review.userEmail}</p>
           <p className="text-xs text-gray-500">
             {new Date(review.createdAt).toLocaleDateString()}
           </p>
         </div>
       </div>
 
-      <div className="cursor-pointer h-40 w-72" 
+      <div className="cursor-pointer h-20 w-32" 
       onClick={onPhotoClick}//setting photo url 
       >
         <img className="h-full w-full object-cover" src={review.photoURL} alt="" />
@@ -112,7 +112,7 @@ const ReviewCard = ({ review, user, onPhotoClick }) => {
         {review.selectedTags.map((tag, i) => (
           <span
             key={i}
-            className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+            className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-full"
           >
             {tag}
           </span>
@@ -123,11 +123,11 @@ const ReviewCard = ({ review, user, onPhotoClick }) => {
 };
 
 const StarRating = ({ value }) => (
-  <div className="flex items-center gap-1 mb-2">
+  <div className="flex items-center gap-0.5">
     {[...Array(5)].map((_, i) => (
       <span 
       key={i} 
-      className={`text-lg ${i < value ? "text-yellow-400" : "text-gray-300"}`}>
+      className={`text-2xl ${i < value ? "text-yellow-400" : "text-gray-300"}`}>
         ★
       </span>
     ))}
