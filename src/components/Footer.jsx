@@ -144,6 +144,7 @@ const Footer = () => {
           <Link to={"/addReview"}>Add Reviews</Link>
           <Link to={"/shopWishlist"}>Shop Wishlist</Link>
           <Link to={"/about"}>About</Link>
+          <a href="https://github.com/hsrokon" target="_blank">Developer</a>
         </ul>
         <p className="text-gray-500">© {new Date().getFullYear()} Halal Rated. All rights reserved.</p>
       </div>
