@@ -244,11 +244,11 @@ const AddReviews = () => {
       confirmButtonText: "Yes, post it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        // console.log(userReviewData);
+        // console.log(reviewData);
 
         //for server fetch
         axiosSecure.post(`/places?selectedPlaceId=${selectedPlaceId}`, placeData)
-        //--place post
+                //--place postj
         .then(res => {
 
           if (res.data.insertedId) {
